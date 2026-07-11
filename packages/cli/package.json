@@ -1,0 +1,35 @@
+{
+  "name": "@nas/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "nas — the No AI Slop command line: seal evidence, run the anti-slop review, and evaluate the release gate.",
+  "bin": {
+    "nas": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -b tsconfig.json",
+    "typecheck": "tsc -b tsconfig.json",
+    "gate": "node ./dist/cli.js"
+  },
+  "dependencies": {
+    "@nas/anti-slop": "workspace:*",
+    "@nas/contracts": "workspace:*",
+    "@nas/crypto": "workspace:*",
+    "@nas/kernel-authz": "workspace:*",
+    "@nas/kernel-evidence": "workspace:*",
+    "@nas/kernel-release": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "5.7.2"
+  }
+}

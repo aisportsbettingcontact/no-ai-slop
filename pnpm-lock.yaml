@@ -40,6 +40,31 @@ importers:
         specifier: 5.7.2
         version: 5.7.2
 
+  packages/cli:
+    dependencies:
+      '@nas/anti-slop':
+        specifier: workspace:*
+        version: link:../anti-slop
+      '@nas/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@nas/crypto':
+        specifier: workspace:*
+        version: link:../crypto
+      '@nas/kernel-authz':
+        specifier: workspace:*
+        version: link:../kernel-authz
+      '@nas/kernel-evidence':
+        specifier: workspace:*
+        version: link:../kernel-evidence
+      '@nas/kernel-release':
+        specifier: workspace:*
+        version: link:../kernel-release
+    devDependencies:
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+
   packages/contracts:
     dependencies:
       zod:
