@@ -1,0 +1,23 @@
+{
+  "name": "@nas/crypto",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "No AI Slop — deterministic canonicalization, content addressing (sha256), and HMAC signing. Node-only.",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "5.7.2"
+  }
+}

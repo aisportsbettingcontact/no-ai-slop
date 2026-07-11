@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Test / coverage
+coverage/
+.vitest/
+playwright-report/
+test-results/
+
+# Evidence store (local, content-addressed) — never commit generated evidence blobs
+.nas/evidence/blobs/
+*.evidence.local
+
+# Environment / secrets — NEVER commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Logs
+*.log
+npm-debug.log*
