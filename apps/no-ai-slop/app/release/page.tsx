@@ -28,8 +28,14 @@ function DecisionSection({
     >
       <KeyValue
         items={[
-          { label: 'Artifact', value: <span className="nas-mono">{decision.manifest.artifactDigest}</span> },
-          { label: 'Source commit', value: <span className="nas-mono">{decision.manifest.sourceCommit}</span> },
+          {
+            label: 'Artifact',
+            value: <span className="nas-mono">{decision.manifest.artifactDigest}</span>,
+          },
+          {
+            label: 'Source commit',
+            value: <span className="nas-mono">{decision.manifest.sourceCommit}</span>,
+          },
           {
             label: 'Signature',
             value: (

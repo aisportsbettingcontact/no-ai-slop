@@ -34,10 +34,28 @@ export function compileResourcePattern(pattern: string): RegExp {
 }
 
 /**
+ * True iff the string contains a control character (code point < 0x20, or DEL).
+ * Such characters never legitimately appear in a URI-shaped resource identifier.
+ */
+function hasControlChar(value: string): boolean {
+  for (let i = 0; i < value.length; i += 1) {
+    const code = value.charCodeAt(i);
+    if (code < 0x20 || code === 0x7f) return true;
+  }
+  return false;
+}
+
+/**
  * True iff `resource` is authorized by `pattern`. Deny-friendly: an empty or
  * malformed input never accidentally matches.
+ *
+ * Control characters are rejected up front. Without this, a `*` segment (`[^/]*`)
+ * would match a newline, so `secret://GITHUB_*` would over-match a newline-injected
+ * resource such as `secret://GITHUB_TOKEN\n<anything>`. A resource identifier is a
+ * URI; a control character in it is malformed, and malformed input is denied.
  */
 export function resourceMatches(pattern: string, resource: string): boolean {
   if (pattern.length === 0 || resource.length === 0) return false;
+  if (hasControlChar(pattern) || hasControlChar(resource)) return false;
   return compileResourcePattern(pattern).test(resource);
 }

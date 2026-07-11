@@ -1,11 +1,7 @@
 import { HmacSigner, EvidenceLog } from '@nas/kernel-evidence';
 import { AuthzBroker, AuthorizationEngine, receiptToEvidenceInput } from '@nas/kernel-authz';
 import { evaluateReview, requiredDimensionsFor } from '@nas/anti-slop';
-import {
-  evaluateRelease,
-  verifyDecisionSignature,
-  STAGING_POLICY,
-} from '@nas/kernel-release';
+import { evaluateRelease, verifyDecisionSignature, STAGING_POLICY } from '@nas/kernel-release';
 import {
   agentActor,
   userActor,
@@ -190,7 +186,11 @@ export function demoCommand(ctx: CliContext, args: ParsedArgs): number {
     tamperedDecision.verdict === 'blocked';
 
   out('\n════════════════════════════════════════════');
-  out(ok ? 'Lifecycle OK: authorized → evidenced → reviewed → released; tamper blocked.' : 'Lifecycle FAILED — see stages above.');
+  out(
+    ok
+      ? 'Lifecycle OK: authorized → evidenced → reviewed → released; tamper blocked.'
+      : 'Lifecycle FAILED — see stages above.',
+  );
 
   if (json) {
     ctx.stdout(

@@ -93,7 +93,9 @@ export class AuthorizationEngine {
         `grant is not valid until ${grant.notBefore ?? grant.issuedAt}`,
       );
     }
-    if (at > expiresAt) {
+    // Exclusive expiry: the validity window is [notBefore, expiresAt). A request at
+    // the exact expiry instant is expired — a stricter, more defensible boundary.
+    if (at >= expiresAt) {
       return this.#deny(req, 'expired', `grant expired at ${grant.expiresAt}`);
     }
     if (grant.nonce !== req.nonce) {

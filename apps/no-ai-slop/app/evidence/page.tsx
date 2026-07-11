@@ -34,12 +34,18 @@ export default function EvidencePage() {
               <Badge tone="info" label={KIND_LABEL[r.kind] ?? r.kind} />
               <div className="nas-stack" style={{ gap: 'var(--nas-space-1)', minWidth: 0 }}>
                 <div>
-                  <span className="nas-muted nas-mono" style={{ marginRight: 'var(--nas-space-3)' }}>
+                  <span
+                    className="nas-muted nas-mono"
+                    style={{ marginRight: 'var(--nas-space-3)' }}
+                  >
                     #{r.sequence}
                   </span>
                   {r.summary}
                 </div>
-                <div className="nas-muted nas-mono nas-truncate" style={{ fontSize: 'var(--nas-text-xs)' }}>
+                <div
+                  className="nas-muted nas-mono nas-truncate"
+                  style={{ fontSize: 'var(--nas-text-xs)' }}
+                >
                   {r.recordDigest}
                 </div>
               </div>

@@ -31,7 +31,11 @@ describe('status components', () => {
 describe('layout components', () => {
   it('PageHeader renders a single h1 title', () => {
     const html = renderToStaticMarkup(
-      <PageHeader eyebrow="Release" title="Release readiness" description="One build under review." />,
+      <PageHeader
+        eyebrow="Release"
+        title="Release readiness"
+        description="One build under review."
+      />,
     );
     expect(html).toContain('<h1');
     expect(html).toContain('Release readiness');

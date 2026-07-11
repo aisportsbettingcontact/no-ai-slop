@@ -1,0 +1,111 @@
+{
+  "$comment": "Machine-readable Definition of Done for No AI Slop v1. status is one of: verified | partially_implemented | blocked | not_tested. 'automatable' items can be checked by the referenced command/test; others require infrastructure not present in this environment.",
+  "version": "0.1.0",
+  "items": [
+    {
+      "id": "dod.evidence.sealed",
+      "statement": "Material claims are captured as content-addressed, hash-chained, signed evidence.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/kernel-evidence/src/log.test.ts"
+    },
+    {
+      "id": "dod.evidence.tamper_evident",
+      "statement": "Any tamper, reorder, deletion, or forgery invalidates the evidence chain (fail-closed).",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/kernel-evidence/src/log.test.ts; nas evidence verify on a tampered chain exits 1"
+    },
+    {
+      "id": "dod.authz.deny_by_default",
+      "statement": "Agents can only act through TC-07: deny-by-default, audience/resource-bound, replay-resistant.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/kernel-authz/src/engine.test.ts"
+    },
+    {
+      "id": "dod.antislop.dimensions",
+      "statement": "Every material change is graded across 13 anti-slop dimensions; required Fail/Not-tested blocks; no hidden score.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/anti-slop/src/engine.test.ts"
+    },
+    {
+      "id": "dod.release.signed_decision",
+      "statement": "TC-10 issues a signed release decision consuming only authenticated evidence; incomplete/unauthenticated inputs never Pass.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/kernel-release/src/evaluate.test.ts"
+    },
+    {
+      "id": "dod.release.independent_review",
+      "statement": "Production releases require a non-self independent review; self-review is blocked.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/kernel-release/src/evaluate.test.ts ('blocks a self-review')"
+    },
+    {
+      "id": "dod.cli.fail_closed_exit",
+      "statement": "The gate CLI exits 0 only for pass/warning and 2 for fail/blocked.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/cli/src/cli.test.ts; real run: nas gate on incomplete inputs exits 2"
+    },
+    {
+      "id": "dod.app.surfaces_real_output",
+      "statement": "The control-plane app renders real kernel output (staging Pass, production Blocked) and the evidence chain.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "next build + apps/no-ai-slop/e2e/browser-check.mjs"
+    },
+    {
+      "id": "dod.app.accessibility",
+      "statement": "Primary screens have zero serious/critical accessibility violations across desktop/mobile, light/dark.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "apps/no-ai-slop/e2e/browser-check.mjs (12 axe-core scans)"
+    },
+    {
+      "id": "dod.design.contrast",
+      "statement": "Every token color pair meets WCAG 2.2 AA contrast in both themes.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/ui/src/tokens.test.ts"
+    },
+    {
+      "id": "dod.lifecycle.demo",
+      "statement": "The full control lifecycle runs end-to-end (authorize -> evidence -> anti-slop -> release) and blocks under tamper.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "nas demo (exit 0, tamper -> BLOCKED); packages/cli/src/cli.test.ts"
+    },
+    {
+      "id": "dod.project.import_github",
+      "statement": "A user can import a GitHub repository and the platform indexes it.",
+      "status": "not_tested",
+      "automatable": false,
+      "evidence": "Requires GitHub App credentials + workspace runtime; contracts present, integration not built"
+    },
+    {
+      "id": "dod.workspace.isolated_run",
+      "statement": "Two projects run concurrently in isolated workspaces without sharing files/ports/secrets.",
+      "status": "not_tested",
+      "automatable": false,
+      "evidence": "Requires container-isolated workspace runtime not present in this environment"
+    },
+    {
+      "id": "dod.deploy.staging_production_rollback",
+      "statement": "An authorized build deploys to staging, promotes to production, and rolls back.",
+      "status": "blocked",
+      "automatable": false,
+      "evidence": "Requires Railway CLI/credentials; deployment model present, live deploy blocked"
+    },
+    {
+      "id": "dod.tenancy.isolation",
+      "statement": "Zero cross-tenant reads/writes/context leakage (TC-19).",
+      "status": "not_tested",
+      "automatable": false,
+      "evidence": "Requires provisioned multi-tenant datastore; data model is contract-only"
+    }
+  ]
+}

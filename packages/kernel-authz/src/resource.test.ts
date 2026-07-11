@@ -32,4 +32,14 @@ describe('resourceMatches', () => {
     expect(resourceMatches('', 'anything')).toBe(false);
     expect(resourceMatches('repo://**', '')).toBe(false);
   });
+
+  it('rejects control characters so `*` cannot over-match across a newline injection', () => {
+    // Regression: `[^/]*` would otherwise match a newline, letting a secret pattern
+    // over-match `secret://GITHUB_TOKEN\n<anything>`.
+    expect(resourceMatches('secret://GITHUB_*', 'secret://GITHUB_TOKEN\nEVIL')).toBe(false);
+    expect(resourceMatches('repo://web/**', 'repo://web/a\nb')).toBe(false);
+    expect(resourceMatches('secret://\tx', 'secret://\tx')).toBe(false);
+    // A clean single-segment secret still matches.
+    expect(resourceMatches('secret://GITHUB_*', 'secret://GITHUB_TOKEN')).toBe(true);
+  });
 });

@@ -14,7 +14,11 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "src/tokens.css", "src/base.css"],
+  "files": [
+    "dist",
+    "src/tokens.css",
+    "src/base.css"
+  ],
   "scripts": {
     "build": "tsc -b tsconfig.json",
     "typecheck": "tsc -b tsconfig.json"

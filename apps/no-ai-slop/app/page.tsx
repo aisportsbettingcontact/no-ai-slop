@@ -72,9 +72,7 @@ export default function OverviewPage() {
             )
           }
         >
-          <p className="nas-muted">
-            {lc.evidenceCount} sealed records, hash-chained and signed.
-          </p>
+          <p className="nas-muted">{lc.evidenceCount} sealed records, hash-chained and signed.</p>
         </Card>
       </div>
 

@@ -161,3 +161,24 @@ describe('receipts as evidence', () => {
     expect(input.metadata.allowed).toBe(true);
   });
 });
+
+describe('issuance + boundary robustness (regressions)', () => {
+  it('a grant issued without an explicit maxUses still verifies and authorizes', () => {
+    // Regression: signing the body before the schema default (maxUses=1) was applied
+    // made the grant fail its own signature check.
+    const body = grantBody();
+    delete (body as { maxUses?: number }).maxUses;
+    engine.registerGrant(broker.issue(body));
+    const { decision } = engine.authorize(request());
+    expect(decision.allowed).toBe(true);
+  });
+
+  it('treats the exact expiry instant as expired (exclusive window)', () => {
+    engine.registerGrant(broker.issue(grantBody({ expiresAt: '2026-01-01T00:05:00.000Z' })));
+    const atExpiry = engine.authorize(request({ at: '2026-01-01T00:05:00.000Z' }));
+    expect(atExpiry.decision.denyReason).toBe('expired');
+    // The same instant expressed with a timezone offset is treated identically.
+    const viaOffset = engine.authorize(request({ at: '2026-01-01T02:05:00.000+02:00' }));
+    expect(viaOffset.decision.denyReason).toBe('expired');
+  });
+});

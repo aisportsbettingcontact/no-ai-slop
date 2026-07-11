@@ -97,7 +97,10 @@ export type ReleaseVerdict = 'pass' | 'warning' | 'fail' | 'blocked';
 export type StatusTone = keyof StatusPalette;
 
 /** Map a release verdict to a status tone + label. Status is never color-only. */
-export const verdictMeta: Record<ReleaseVerdict, { tone: StatusTone; label: string; symbol: string }> = {
+export const verdictMeta: Record<
+  ReleaseVerdict,
+  { tone: StatusTone; label: string; symbol: string }
+> = {
   pass: { tone: 'success', label: 'Pass', symbol: '✓' },
   warning: { tone: 'warning', label: 'Warning', symbol: '!' },
   fail: { tone: 'danger', label: 'Fail', symbol: '✗' },

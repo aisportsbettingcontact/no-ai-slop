@@ -16,8 +16,14 @@ import { chromium } from 'playwright-core';
 const require = createRequire(import.meta.url);
 const BASE = process.argv[2] ?? 'http://localhost:3000';
 const OUT = process.argv[3] ?? './e2e/screenshots';
-const CHROME =
-  process.env.NAS_CHROME_PATH ?? '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+
+/**
+ * Resolve a Chromium binary. Prefer an explicit path (NAS_CHROME_PATH), then the
+ * pre-provisioned browser in this environment, else let playwright-core resolve
+ * its own managed download (used in CI after `playwright install chromium`).
+ */
+const LOCAL_CHROME = '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
+const CHROME = process.env.NAS_CHROME_PATH ?? (existsSync(LOCAL_CHROME) ? LOCAL_CHROME : undefined);
 
 const axePath = require.resolve('axe-core/axe.min.js');
 const { readFileSync } = await import('node:fs');
@@ -36,7 +42,10 @@ const VIEWPORTS = [
 
 if (!existsSync(OUT)) mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({ executablePath: CHROME, headless: true });
+const browser = await chromium.launch({
+  headless: true,
+  ...(CHROME ? { executablePath: CHROME } : {}),
+});
 let failures = 0;
 let checks = 0;
 
@@ -79,7 +88,7 @@ try {
         // Accessibility scan with axe-core (WCAG 2a/2aa rules).
         await page.addScriptTag({ content: axeSource });
         const results = await page.evaluate(async () => {
-          // @ts-ignore - axe is injected above
+          // axe is injected into the page above via addScriptTag.
           return await window.axe.run(document, {
             runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'] },
           });

@@ -31,8 +31,8 @@
   --nas-neutral-bg: #eeeef0;
 
   /* Typography */
-  --nas-font-sans:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif;
+  --nas-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial,
+    sans-serif;
   --nas-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
   --nas-text-xs: 0.75rem;
   --nas-text-sm: 0.8125rem;

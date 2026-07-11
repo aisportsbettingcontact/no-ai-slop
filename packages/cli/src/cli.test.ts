@@ -75,8 +75,15 @@ describe('nas demo', () => {
 describe('nas evidence', () => {
   it('seals and verifies a chain, and fails closed without a key', () => {
     const { ctx, out } = makeCtx();
-    expect(runCli(['evidence', 'add', '--kind', 'test', '--summary', 'unit ok', '--content', 'hi'], ctx)).toBe(0);
-    expect(runCli(['evidence', 'add', '--kind', 'build', '--summary', 'built', '--content', 'artifact'], ctx)).toBe(0);
+    expect(
+      runCli(['evidence', 'add', '--kind', 'test', '--summary', 'unit ok', '--content', 'hi'], ctx),
+    ).toBe(0);
+    expect(
+      runCli(
+        ['evidence', 'add', '--kind', 'build', '--summary', 'built', '--content', 'artifact'],
+        ctx,
+      ),
+    ).toBe(0);
     expect(runCli(['evidence', 'verify'], ctx)).toBe(0);
     expect(out.join('\n')).toMatch(/chain VALID — 2 record/);
 
@@ -103,9 +110,7 @@ describe('nas antislop', () => {
   function writeReview(dir: string, accepted: boolean): string {
     const grades = requiredDimensionsFor('bug_fix').map((dimension) => ({
       dimension,
-      grade: (accepted ? 'pass' : dimension === 'test_depth' ? 'fail' : 'pass') as
-        | 'pass'
-        | 'fail',
+      grade: (accepted ? 'pass' : dimension === 'test_depth' ? 'fail' : 'pass') as 'pass' | 'fail',
       rationale: 'r',
       evidenceIds: [],
     }));
