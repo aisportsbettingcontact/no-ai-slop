@@ -1,0 +1,140 @@
+/*
+ * No AI Slop design tokens as CSS custom properties.
+ * These values MIRROR packages/ui/src/tokens.ts (the source of truth, contrast-tested).
+ * Light is the default; dark is applied by [data-theme="dark"] and by the OS
+ * preference when no explicit theme is set.
+ */
+:root {
+  /* Neutrals + accent (light) */
+  --nas-bg: #fbfbfd;
+  --nas-surface: #ffffff;
+  --nas-surface-2: #f4f4f6;
+  --nas-border: #d9d9de;
+  --nas-text: #1d1d1f;
+  --nas-text-secondary: #54545a;
+  --nas-text-tertiary: #6e6e73;
+  --nas-accent: #0a7c6d;
+  --nas-accent-hover: #086253;
+  --nas-on-accent: #ffffff;
+  --nas-focus: #0a7c6d;
+
+  /* Status (light) */
+  --nas-success-fg: #0f7a37;
+  --nas-success-bg: #e6f4ea;
+  --nas-warning-fg: #8a6100;
+  --nas-warning-bg: #fbefd6;
+  --nas-danger-fg: #b3261e;
+  --nas-danger-bg: #fce8e6;
+  --nas-info-fg: #1b56b3;
+  --nas-info-bg: #e7effb;
+  --nas-neutral-fg: #4b4b50;
+  --nas-neutral-bg: #eeeef0;
+
+  /* Typography */
+  --nas-font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif;
+  --nas-font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+  --nas-text-xs: 0.75rem;
+  --nas-text-sm: 0.8125rem;
+  --nas-text-base: 0.9375rem;
+  --nas-text-lg: 1.0625rem;
+  --nas-text-xl: 1.375rem;
+  --nas-text-2xl: 1.75rem;
+  --nas-text-3xl: 2.25rem;
+  --nas-weight-regular: 400;
+  --nas-weight-medium: 500;
+  --nas-weight-semibold: 600;
+  --nas-leading-tight: 1.2;
+  --nas-leading-normal: 1.5;
+
+  /* Spacing scale (mirror of tokens.ts spacing) */
+  --nas-space-1: 2px;
+  --nas-space-2: 4px;
+  --nas-space-3: 8px;
+  --nas-space-4: 12px;
+  --nas-space-5: 16px;
+  --nas-space-6: 20px;
+  --nas-space-7: 24px;
+  --nas-space-8: 32px;
+  --nas-space-9: 40px;
+  --nas-space-10: 48px;
+  --nas-space-11: 64px;
+
+  /* Radius, borders, shadow, motion */
+  --nas-radius-sm: 6px;
+  --nas-radius-md: 10px;
+  --nas-radius-lg: 14px;
+  --nas-radius-full: 999px;
+  --nas-border-width: 1px;
+  --nas-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --nas-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --nas-motion-fast: 120ms;
+  --nas-motion-normal: 200ms;
+  --nas-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Layout */
+  --nas-content-max: 1120px;
+  --nas-sidebar-width: 240px;
+  --nas-z-nav: 100;
+  --nas-z-overlay: 200;
+}
+
+/* Dark: explicit opt-in */
+:root[data-theme='dark'] {
+  --nas-bg: #0b0b0c;
+  --nas-surface: #161618;
+  --nas-surface-2: #1f1f22;
+  --nas-border: #38383c;
+  --nas-text: #f5f5f7;
+  --nas-text-secondary: #b0b0b6;
+  --nas-text-tertiary: #98989f;
+  --nas-accent: #2dd4bf;
+  --nas-accent-hover: #4ee0cd;
+  --nas-on-accent: #04241f;
+  --nas-focus: #2dd4bf;
+
+  --nas-success-fg: #6ee7a0;
+  --nas-success-bg: #10331d;
+  --nas-warning-fg: #f0c651;
+  --nas-warning-bg: #332808;
+  --nas-danger-fg: #f6a49c;
+  --nas-danger-bg: #3a1614;
+  --nas-info-fg: #9dbef5;
+  --nas-info-bg: #12233f;
+  --nas-neutral-fg: #b0b0b6;
+  --nas-neutral-bg: #242427;
+
+  --nas-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --nas-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Dark: follow the OS when the user has not chosen a theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --nas-bg: #0b0b0c;
+    --nas-surface: #161618;
+    --nas-surface-2: #1f1f22;
+    --nas-border: #38383c;
+    --nas-text: #f5f5f7;
+    --nas-text-secondary: #b0b0b6;
+    --nas-text-tertiary: #98989f;
+    --nas-accent: #2dd4bf;
+    --nas-accent-hover: #4ee0cd;
+    --nas-on-accent: #04241f;
+    --nas-focus: #2dd4bf;
+
+    --nas-success-fg: #6ee7a0;
+    --nas-success-bg: #10331d;
+    --nas-warning-fg: #f0c651;
+    --nas-warning-bg: #332808;
+    --nas-danger-fg: #f6a49c;
+    --nas-danger-bg: #3a1614;
+    --nas-info-fg: #9dbef5;
+    --nas-info-bg: #12233f;
+    --nas-neutral-fg: #b0b0b6;
+    --nas-neutral-bg: #242427;
+
+    --nas-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --nas-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+}

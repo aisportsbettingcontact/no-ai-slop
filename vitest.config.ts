@@ -17,10 +17,15 @@ export default defineConfig({
       '@nas/kernel-authz': src('./packages/kernel-authz/src/index.ts'),
       '@nas/kernel-release': src('./packages/kernel-release/src/index.ts'),
       '@nas/anti-slop': src('./packages/anti-slop/src/index.ts'),
+      '@nas/ui': src('./packages/ui/src/index.ts'),
     },
   },
+  esbuild: {
+    jsx: 'automatic',
+    jsxImportSource: 'react',
+  },
   test: {
-    include: ['packages/**/*.test.ts'],
+    include: ['packages/**/*.test.{ts,tsx}'],
     exclude: ['**/node_modules/**', '**/dist/**', 'apps/**'],
     environment: 'node',
     reporters: ['default'],

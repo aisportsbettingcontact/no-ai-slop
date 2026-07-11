@@ -1,0 +1,320 @@
+/*
+ * No AI Slop base styles + component classes.
+ * Depends on tokens.css. Restrained by design: no gradients, no glass, no glow.
+ * Every interactive element has a visible focus ring and honors reduced motion.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--nas-font-sans);
+  font-size: var(--nas-text-base);
+  line-height: var(--nas-leading-normal);
+  color: var(--nas-text);
+  background: var(--nas-bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--nas-focus);
+  outline-offset: 2px;
+  border-radius: var(--nas-radius-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ── Layout primitives ─────────────────────────────────────────────────────── */
+.nas-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nas-space-5);
+}
+.nas-row {
+  display: flex;
+  align-items: center;
+  gap: var(--nas-space-4);
+}
+.nas-spread {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nas-space-4);
+}
+.nas-muted {
+  color: var(--nas-text-secondary);
+}
+.nas-mono {
+  font-family: var(--nas-font-mono);
+  font-size: var(--nas-text-sm);
+}
+.nas-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Card / panel ──────────────────────────────────────────────────────────── */
+.nas-card {
+  background: var(--nas-surface);
+  border: var(--nas-border-width) solid var(--nas-border);
+  border-radius: var(--nas-radius-lg);
+  padding: var(--nas-space-7);
+  box-shadow: var(--nas-shadow-sm);
+}
+.nas-card__title {
+  font-size: var(--nas-text-lg);
+  font-weight: var(--nas-weight-semibold);
+  line-height: var(--nas-leading-tight);
+}
+.nas-card__subtitle {
+  color: var(--nas-text-secondary);
+  font-size: var(--nas-text-sm);
+  margin-top: var(--nas-space-1);
+}
+
+/* ── Page header ───────────────────────────────────────────────────────────── */
+.nas-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nas-space-2);
+  padding-bottom: var(--nas-space-6);
+  border-bottom: var(--nas-border-width) solid var(--nas-border);
+}
+.nas-page-header__eyebrow {
+  font-size: var(--nas-text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--nas-text-tertiary);
+  font-weight: var(--nas-weight-medium);
+}
+.nas-page-header__title {
+  font-size: var(--nas-text-2xl);
+  font-weight: var(--nas-weight-semibold);
+  line-height: var(--nas-leading-tight);
+  letter-spacing: -0.01em;
+}
+.nas-page-header__desc {
+  color: var(--nas-text-secondary);
+  max-width: 60ch;
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────── */
+.nas-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nas-space-3);
+  min-height: 40px;
+  padding: 0 var(--nas-space-6);
+  font: inherit;
+  font-weight: var(--nas-weight-medium);
+  border-radius: var(--nas-radius-md);
+  border: var(--nas-border-width) solid transparent;
+  cursor: pointer;
+  transition:
+    background var(--nas-motion-fast) var(--nas-ease),
+    border-color var(--nas-motion-fast) var(--nas-ease);
+}
+.nas-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.nas-btn--primary {
+  background: var(--nas-accent);
+  color: var(--nas-on-accent);
+}
+.nas-btn--primary:hover:not(:disabled) {
+  background: var(--nas-accent-hover);
+}
+.nas-btn--secondary {
+  background: var(--nas-surface);
+  color: var(--nas-text);
+  border-color: var(--nas-border);
+}
+.nas-btn--secondary:hover:not(:disabled) {
+  background: var(--nas-surface-2);
+}
+.nas-btn--ghost {
+  background: transparent;
+  color: var(--nas-text);
+}
+.nas-btn--ghost:hover:not(:disabled) {
+  background: var(--nas-surface-2);
+}
+
+/* ── Badges (status is label + color, never color alone) ───────────────────── */
+.nas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nas-space-2);
+  padding: 2px var(--nas-space-3);
+  border-radius: var(--nas-radius-full);
+  font-size: var(--nas-text-xs);
+  font-weight: var(--nas-weight-medium);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.nas-badge__symbol {
+  font-weight: var(--nas-weight-semibold);
+}
+.nas-badge--success {
+  color: var(--nas-success-fg);
+  background: var(--nas-success-bg);
+}
+.nas-badge--warning {
+  color: var(--nas-warning-fg);
+  background: var(--nas-warning-bg);
+}
+.nas-badge--danger {
+  color: var(--nas-danger-fg);
+  background: var(--nas-danger-bg);
+}
+.nas-badge--info {
+  color: var(--nas-info-fg);
+  background: var(--nas-info-bg);
+}
+.nas-badge--neutral {
+  color: var(--nas-neutral-fg);
+  background: var(--nas-neutral-bg);
+}
+
+/* ── Definition list (key/value) ───────────────────────────────────────────── */
+.nas-kv {
+  display: grid;
+  grid-template-columns: minmax(120px, max-content) 1fr;
+  gap: var(--nas-space-3) var(--nas-space-6);
+  margin: 0;
+}
+.nas-kv dt {
+  color: var(--nas-text-secondary);
+  font-size: var(--nas-text-sm);
+}
+.nas-kv dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── Reason / dimension list ───────────────────────────────────────────────── */
+.nas-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--nas-space-3);
+}
+.nas-list__item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--nas-space-4);
+  padding: var(--nas-space-4) 0;
+  border-top: var(--nas-border-width) solid var(--nas-border);
+}
+.nas-list__item:first-child {
+  border-top: none;
+}
+
+/* ── App shell ─────────────────────────────────────────────────────────────── */
+.nas-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--nas-sidebar-width) 1fr;
+}
+.nas-sidebar {
+  border-right: var(--nas-border-width) solid var(--nas-border);
+  background: var(--nas-surface);
+  padding: var(--nas-space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--nas-space-6);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+.nas-brand {
+  font-weight: var(--nas-weight-semibold);
+  font-size: var(--nas-text-lg);
+  letter-spacing: -0.01em;
+}
+.nas-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nas-space-1);
+}
+.nas-nav__link {
+  padding: var(--nas-space-3) var(--nas-space-4);
+  border-radius: var(--nas-radius-md);
+  color: var(--nas-text-secondary);
+  font-size: var(--nas-text-sm);
+  font-weight: var(--nas-weight-medium);
+}
+.nas-nav__link:hover {
+  background: var(--nas-surface-2);
+  color: var(--nas-text);
+}
+.nas-nav__link[aria-current='page'] {
+  background: var(--nas-surface-2);
+  color: var(--nas-text);
+}
+.nas-main {
+  padding: var(--nas-space-9);
+  max-width: var(--nas-content-max);
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Tablet + mobile: sidebar becomes a top bar; content stacks. */
+@media (max-width: 1023px) {
+  .nas-shell {
+    grid-template-columns: 1fr;
+  }
+  .nas-sidebar {
+    position: static;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-right: none;
+    border-bottom: var(--nas-border-width) solid var(--nas-border);
+    padding: var(--nas-space-4) var(--nas-space-5);
+  }
+  .nas-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  .nas-main {
+    padding: var(--nas-space-6);
+  }
+}
