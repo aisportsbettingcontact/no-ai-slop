@@ -267,6 +267,7 @@ a {
   font-weight: var(--nas-weight-semibold);
   font-size: var(--nas-text-lg);
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 .nas-nav {
   display: flex;
@@ -303,16 +304,17 @@ a {
   .nas-sidebar {
     position: static;
     height: auto;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: stretch;
     border-right: none;
     border-bottom: var(--nas-border-width) solid var(--nas-border);
     padding: var(--nas-space-4) var(--nas-space-5);
+    gap: var(--nas-space-4);
   }
   .nas-nav {
     flex-direction: row;
     flex-wrap: wrap;
+    gap: var(--nas-space-2);
   }
   .nas-main {
     padding: var(--nas-space-6);

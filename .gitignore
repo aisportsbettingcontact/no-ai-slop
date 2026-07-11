@@ -14,6 +14,7 @@ coverage/
 .vitest/
 playwright-report/
 test-results/
+e2e/screenshots/
 
 # Evidence store (local, content-addressed) — never commit generated evidence blobs
 .nas/evidence/blobs/
