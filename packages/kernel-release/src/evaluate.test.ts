@@ -270,6 +270,48 @@ describe('measured failures → fail', () => {
   });
 });
 
+describe('adversarial hardening (regressions)', () => {
+  it('rejects a self-contradictory anti-slop result (accepted with a non-empty blocking list)', () => {
+    const { inputs } = passingProductionInputs();
+    inputs.antiSlop = {
+      ...acceptedAntiSlop,
+      accepted: true,
+      blocking: [{ dimension: 'security_impact', grade: 'fail', reason: 'RCE' }],
+    };
+    const d = evaluateRelease(inputs, deps());
+    expect(d.verdict).toBe('fail');
+    expect(d.blocking.join(' ')).toMatch(/inconsistent/);
+  });
+
+  it('blocks self-review even when the author misreports authorId (binds to build author)', () => {
+    const { inputs } = passingProductionInputs();
+    // The build author is u_dev; the reviewer IS u_dev but claims a different authorId.
+    inputs.independentReview = {
+      reviewer: userActor('u_dev', 'Dev Author'),
+      authorId: 'u_someone_else',
+      approved: true,
+      rationale: 'lgtm',
+      reviewedAt: '2026-05-01T00:02:00.000Z',
+    };
+    const d = evaluateRelease(inputs, deps());
+    expect(d.verdict).toBe('blocked');
+    expect(d.blocking.join(' ')).toMatch(/self-review/);
+  });
+
+  it('blocks duplicate check names so a passing duplicate cannot shadow a failing one', () => {
+    const { inputs } = passingProductionInputs();
+    const integration = inputs.checks.find((c) => c.name === 'integration')!;
+    inputs.checks = [
+      ...inputs.checks,
+      { name: 'integration', status: 'fail', detail: 'broken' },
+      { name: 'integration', status: 'pass', evidenceId: integration.evidenceId },
+    ];
+    const d = evaluateRelease(inputs, deps());
+    expect(d.verdict).toBe('blocked');
+    expect(d.blocking.join(' ')).toMatch(/duplicate check name reported: integration/);
+  });
+});
+
 describe('warnings + staging policy', () => {
   it('treats an incomplete required check as a warning under staging policy', () => {
     const log = new EvidenceLog({

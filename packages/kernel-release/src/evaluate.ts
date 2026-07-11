@@ -61,6 +61,15 @@ export function evaluateRelease(
   }
 
   // 3. Required checks: reported, passing, and evidence-backed by the authenticated chain.
+  // Duplicate check names are rejected: otherwise a later `pass` could shadow an
+  // earlier `fail` for the same check (Map-keeps-last), sneaking a failure through.
+  const seenCheckNames = new Set<string>();
+  for (const check of inputs.checks) {
+    if (seenCheckNames.has(check.name)) {
+      blocked.push(`duplicate check name reported: ${check.name}`);
+    }
+    seenCheckNames.add(check.name);
+  }
   const checkByName = new Map(inputs.checks.map((c) => [c.name, c]));
   for (const name of policy.requiredChecks) {
     const check = checkByName.get(name);
@@ -91,18 +100,27 @@ export function evaluateRelease(
     }
   }
 
-  // 4. Anti-slop gate.
-  if (policy.requireAntiSlopAccepted && !inputs.antiSlop.accepted) {
+  // 4. Anti-slop gate. We do not simply trust the `accepted` flag: a
+  // self-contradictory result (accepted with a non-empty blocking list) is
+  // rejected, so a malformed/forged gate result cannot pass.
+  if (policy.requireAntiSlopAccepted) {
     const dims = inputs.antiSlop.blocking.map((b) => `${b.dimension}(${b.grade})`).join(', ');
-    failed.push(`anti-slop gate not accepted — blocking dimensions: ${dims || 'unspecified'}`);
+    if (!inputs.antiSlop.accepted) {
+      failed.push(`anti-slop gate not accepted — blocking dimensions: ${dims || 'unspecified'}`);
+    } else if (inputs.antiSlop.blocking.length > 0) {
+      failed.push(`anti-slop gate result is inconsistent (accepted but has blocking: ${dims})`);
+    }
   }
 
-  // 5. Independent review (no self-review).
+  // 5. Independent review (no self-review). We bind "author" to the attributable
+  // build author (manifest.createdBy) as well as the caller-supplied authorId, so
+  // an author cannot self-approve by misreporting who authored the change.
   if (policy.requireIndependentReview) {
     const review = inputs.independentReview;
+    const buildAuthorId = inputs.manifest.createdBy.id;
     if (!review) {
       blocked.push('independent review is required but was not provided');
-    } else if (review.reviewer.id === review.authorId) {
+    } else if (review.reviewer.id === review.authorId || review.reviewer.id === buildAuthorId) {
       blocked.push('independent review invalid: reviewer is the author (self-review)');
     } else if (!review.approved) {
       failed.push(`independent review rejected: ${review.rationale}`);

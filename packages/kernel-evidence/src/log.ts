@@ -24,9 +24,14 @@ export interface EvidenceLogOptions {
   initial?: EvidenceRecord[];
 }
 
-/** The body of a record that is content-addressed. Excludes the digest + signature. */
+/**
+ * The body of a record that is content-addressed. Excludes only the digest and
+ * signature. Crucially it INCLUDES `signedBy`, so the sealing-authority
+ * attribution is covered by the digest (and therefore the signature) — otherwise
+ * an attacker could rewrite who sealed a record without invalidating the chain.
+ */
 function recordBody(
-  r: Pick<EvidenceRecord, 'id' | 'sequence' | 'createdAt' | 'input' | 'prevDigest'>,
+  r: Pick<EvidenceRecord, 'id' | 'sequence' | 'createdAt' | 'input' | 'prevDigest' | 'signedBy'>,
 ) {
   return {
     id: r.id,
@@ -34,6 +39,7 @@ function recordBody(
     createdAt: r.createdAt,
     input: r.input,
     prevDigest: r.prevDigest,
+    signedBy: r.signedBy,
   };
 }
 
@@ -90,13 +96,13 @@ export class EvidenceLog {
       createdAt: this.#clock(),
       input,
       prevDigest,
+      signedBy: this.#authority,
     });
     const recordDigest = digestValue(body) as Sha256Digest;
     const signature = this.#signer.sign(recordDigest);
     const record: EvidenceRecord = {
       ...body,
       recordDigest,
-      signedBy: this.#authority,
       signature: { keyId: signature.keyId, algorithm: 'hmac-sha256', value: signature.value },
     };
     this.#records.push(record);

@@ -116,3 +116,19 @@ sequenceDiagram
 
 Infrastructure-level recovery (workspace restart, DB restore, deploy rollback) is
 designed in the data/deployment model but **Not tested** in this environment.
+
+## Known limitations (honestly disclosed)
+
+- **Tail truncation of the evidence chain.** An append-only hash chain detects
+  mutation, reordering, and mid-chain deletion, but cannot by itself detect that
+  trailing records were never added — that requires an external head/length
+  commitment. This is mitigated in practice at two layers: the release gate rejects
+  a build that is missing any *required* evidence kind (so truncating required
+  evidence is caught), and a signed release decision binds `inputsDigest` over the
+  exact evidence set it evaluated. A future hardening is to anchor the expected
+  chain head in the release manifest. Verified by adversarial testing: truncating a
+  required record yields `blocked`.
+- **`authorId` is caller-supplied.** The release gate binds self-review detection
+  to the attributable build author (`manifest.createdBy`) as well as the supplied
+  `authorId`, but full author attribution ultimately depends on the identity layer
+  (Not tested in this environment).

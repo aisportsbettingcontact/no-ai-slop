@@ -128,6 +128,18 @@ describe('EvidenceLog tamper detection (fail-closed)', () => {
     const reversed = [...log.toJSON()].reverse();
     expect(EvidenceLog.verifyChain(reversed, signer).valid).toBe(false);
   });
+
+  it('detects tampering of the signing-authority attribution (signedBy)', () => {
+    // Regression: signedBy was not covered by the digest, so an attacker could
+    // rewrite who sealed a record without invalidating the chain.
+    const { log, signer } = makeLog();
+    log.append(input('one'));
+    const tampered = structuredClone(log.toJSON());
+    tampered[0]!.signedBy = agentActor('agent.attacker', 'Attacker');
+    const v = EvidenceLog.verifyChain(tampered, signer);
+    expect(v.valid).toBe(false);
+    expect(v.reasons.join(' ')).toMatch(/content digest mismatch/);
+  });
 });
 
 describe('EvidenceLog load-time verification', () => {
