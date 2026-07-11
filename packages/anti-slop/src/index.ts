@@ -1,0 +1,10 @@
+/**
+ * @nas/anti-slop — the Anti-Slop review engine.
+ *
+ * Grades a change across thirteen fixed dimensions and reports exactly which ones
+ * block acceptance. There is deliberately no single "slop score": hiding an
+ * individual weakness behind an average is itself the failure this engine exists
+ * to prevent.
+ */
+export { evaluateReview } from './engine.js';
+export { REQUIRED_DIMENSIONS, requiredDimensionsFor } from './policy.js';

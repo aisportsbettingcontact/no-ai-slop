@@ -5,6 +5,11 @@
     "outDir": "./dist",
     "rootDir": "./src"
   },
+  "references": [
+    { "path": "../contracts" },
+    { "path": "../crypto" },
+    { "path": "../kernel-evidence" }
+  ],
   "include": ["src/**/*.ts"],
   "exclude": ["dist", "node_modules", "**/*.test.ts"]
 }

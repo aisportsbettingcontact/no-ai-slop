@@ -2,14 +2,7 @@ import { z } from 'zod';
 import { Actor } from './actor.js';
 import { AntiSlopGateResult } from './anti-slop.js';
 import { EvidenceKind, EvidenceRecord, Signature } from './evidence.js';
-import {
-  BuildId,
-  DecisionId,
-  OrgId,
-  ProjectId,
-  Sha256Digest,
-  Timestamp,
-} from './ids.js';
+import { BuildId, DecisionId, OrgId, ProjectId, Sha256Digest, Timestamp } from './ids.js';
 
 /**
  * TC-10: Release-Gate Correctness (contract layer).

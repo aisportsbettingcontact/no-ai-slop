@@ -23,16 +23,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "verbatimModuleSyntax": false,
-    "baseUrl": ".",
-    "paths": {
-      "@nas/contracts": ["packages/contracts/src/index.ts"],
-      "@nas/crypto": ["packages/crypto/src/index.ts"],
-      "@nas/kernel-evidence": ["packages/kernel-evidence/src/index.ts"],
-      "@nas/kernel-authz": ["packages/kernel-authz/src/index.ts"],
-      "@nas/kernel-release": ["packages/kernel-release/src/index.ts"],
-      "@nas/anti-slop": ["packages/anti-slop/src/index.ts"],
-      "@nas/ui": ["packages/ui/src/index.ts"]
-    }
+    "verbatimModuleSyntax": false
   }
 }

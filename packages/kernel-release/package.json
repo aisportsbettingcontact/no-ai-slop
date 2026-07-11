@@ -1,9 +1,9 @@
 {
-  "name": "@nas/contracts",
+  "name": "@nas/kernel-release",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "No AI Slop — authoritative shared contracts (types + runtime schemas). Pure, no Node built-ins, safe for browser and server.",
+  "description": "TC-10: Release-Gate Correctness. Consumes only authenticated evidence; issues a signed, fail-closed decision.",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -20,7 +20,9 @@
     "typecheck": "tsc -b tsconfig.json"
   },
   "dependencies": {
-    "zod": "3.24.1"
+    "@nas/contracts": "workspace:*",
+    "@nas/crypto": "workspace:*",
+    "@nas/kernel-evidence": "workspace:*"
   },
   "devDependencies": {
     "typescript": "5.7.2"

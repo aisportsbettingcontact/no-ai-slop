@@ -30,6 +30,16 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.10.2)
 
+  packages/anti-slop:
+    dependencies:
+      '@nas/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+    devDependencies:
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+
   packages/contracts:
     dependencies:
       zod:
@@ -41,6 +51,51 @@ importers:
         version: 5.7.2
 
   packages/crypto:
+    devDependencies:
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+
+  packages/kernel-authz:
+    dependencies:
+      '@nas/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@nas/crypto':
+        specifier: workspace:*
+        version: link:../crypto
+      '@nas/kernel-evidence':
+        specifier: workspace:*
+        version: link:../kernel-evidence
+    devDependencies:
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+
+  packages/kernel-evidence:
+    dependencies:
+      '@nas/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@nas/crypto':
+        specifier: workspace:*
+        version: link:../crypto
+    devDependencies:
+      typescript:
+        specifier: 5.7.2
+        version: 5.7.2
+
+  packages/kernel-release:
+    dependencies:
+      '@nas/contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@nas/crypto':
+        specifier: workspace:*
+        version: link:../crypto
+      '@nas/kernel-evidence':
+        specifier: workspace:*
+        version: link:../kernel-evidence
     devDependencies:
       typescript:
         specifier: 5.7.2

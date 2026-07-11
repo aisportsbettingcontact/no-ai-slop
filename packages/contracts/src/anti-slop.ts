@@ -99,9 +99,7 @@ export const AntiSlopGateResult = z.object({
   changeType: ChangeType,
   requiredDimensions: z.array(AntiSlopDimension),
   blocking: z.array(BlockingDimension),
-  concerns: z.array(
-    z.object({ dimension: AntiSlopDimension, rationale: z.string() }),
-  ),
+  concerns: z.array(z.object({ dimension: AntiSlopDimension, rationale: z.string() })),
   exceptionsApplied: z.array(AntiSlopDimension),
   summary: z.string().min(1),
 });

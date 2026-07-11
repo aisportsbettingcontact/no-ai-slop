@@ -2,6 +2,7 @@
   "name": "no-ai-slop",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "description": "No AI Slop — a controlled AI application development platform that makes it hard to ship low-quality, AI-generated software.",
   "license": "UNLICENSED",
   "packageManager": "pnpm@10.33.0",

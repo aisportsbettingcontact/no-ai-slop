@@ -1,0 +1,12 @@
+{
+  "//": "Solution file for `tsc -b`. References every buildable library package so the compiler builds them in dependency order and resolves cross-package types from emitted declarations.",
+  "files": [],
+  "references": [
+    { "path": "./packages/contracts" },
+    { "path": "./packages/crypto" },
+    { "path": "./packages/kernel-evidence" },
+    { "path": "./packages/kernel-authz" },
+    { "path": "./packages/kernel-release" },
+    { "path": "./packages/anti-slop" }
+  ]
+}

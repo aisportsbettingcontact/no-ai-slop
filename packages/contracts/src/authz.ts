@@ -1,13 +1,6 @@
 import { z } from 'zod';
 import { Actor } from './actor.js';
-import {
-  AgentId,
-  CorrelationId,
-  GrantId,
-  KeyId,
-  Sha256Digest,
-  Timestamp,
-} from './ids.js';
+import { AgentId, CorrelationId, GrantId, KeyId, Sha256Digest, Timestamp } from './ids.js';
 
 /**
  * TC-07: Agent Authorization and Least Privilege (contract layer).
