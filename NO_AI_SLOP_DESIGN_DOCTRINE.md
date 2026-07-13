@@ -19,8 +19,12 @@ Release answers "why did the gate decide this?". Evidence answers "can I trust t
 record?". Each screen has exactly one primary action.
 
 **Hierarchy through type and space, not decoration.** A closed type scale and a
-closed spacing scale (`tokens.ts`) — no arbitrary values. Titles are `-0.01em`
-tracked; secondary text steps down in weight and color, never just size.
+closed spacing scale (`tokens.ts`) — no arbitrary values. Titles use the
+`type.tracking.tight` token; secondary text steps down in weight and color,
+never just size. Since v1.1 the closed scales are machine-enforced: the
+design-system registry (`packages/ui/src/registry.ts`) names every token,
+component, pattern, and exception, and `pnpm check:design-system` fails on any
+raw visual value in a governed path that lacks an owned, expiring exception.
 
 **Restrained color.** Neutral surfaces, ONE mint accent reserved for the single
 primary action, and semantic status colors (success/warning/danger/info/neutral).

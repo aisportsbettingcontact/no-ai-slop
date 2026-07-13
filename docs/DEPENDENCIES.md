@@ -31,3 +31,16 @@ crypto library — fewer moving parts to audit.
 Kept out on purpose to avoid unnecessary dependency accumulation: a CLI arg-parsing
 library (the `nas` parser is ~30 lines), a state-management library, a component
 library, a CSS framework, and any crypto/JWT library (Node built-ins suffice).
+
+### v1.1 (machine-readable product system): zero new dependencies
+
+The registry, architecture rules, scanners, impact analysis, and governance
+state machine are plain TypeScript/Node over the existing `zod` foundation.
+Explicitly rejected in [ADR-0001](adr/ADR-0001-machine-readable-product-system.md):
+Storybook (component-state harness need is covered by the Playwright browser
+harness + registry state declarations), a graph database (deterministic local
+data structures suffice), an ESLint architecture plugin (rules as data are
+testable and reusable by the app), and a JSON-schema generator. Internal wiring
+only: `@nas/ui` now depends on `@nas/contracts` (the edge ARCHITECTURE.md always
+declared), and `@nas/cli` gained a dev-only dependency on `@nas/ui` for the
+repo-system test suite.

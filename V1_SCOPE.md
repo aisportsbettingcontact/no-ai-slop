@@ -28,6 +28,23 @@ required by the project: **Implemented**, **Verified**, **Partially implemented*
 | Control-plane web app (surfaces real kernel output) | Verified | `apps/no-ai-slop` |
 | Responsive + accessibility browser scan harness | Verified | `apps/no-ai-slop/e2e` |
 
+## Added in v1.1 — machine-readable product system (ADR-0001)
+
+| Capability | Status | Where |
+| --- | --- | --- |
+| Design-system / architecture / governance contracts (Zod + types) | Verified | `packages/contracts/src/{design-system,architecture,governance,system-finding}.ts` |
+| Typed registry of the actual system (tokens by tier, components by atomic level, patterns, owners, exceptions) | Verified | `packages/ui/src/registry.ts` + generated `docs/design-system/registry.json` |
+| Registry referential integrity + registry ↔ CSS ↔ exports sync tests | Verified | `validateDesignSystemRegistry`, `packages/ui/src/registry.test.ts` |
+| Raw-value scan of governed UI paths with owned, expiring exceptions | Verified | `scripts/check-design-system.mjs`, `packages/anti-slop/src/checks/design-system.ts` |
+| Machine-readable layer rules + dependency-direction check + cycle detection | Verified | `docs/architecture/layer-rules.json`, `scripts/check-architecture.mjs`, `packages/anti-slop/src/checks/architecture.ts` |
+| Deterministic change-impact report (files → modules → dimensions → evidence) | Verified | `packages/anti-slop/src/checks/impact.ts`, `--impact` mode |
+| System findings graded into the existing 13 dimensions (no new dimension, no score) | Verified | `packages/anti-slop/src/checks/grades.ts` + gate integration test |
+| Governance contribution state machine (non-self publish, expiring exceptions) | Verified | `packages/contracts/src/governance.ts` |
+| Control-plane `/system` view rendering the live registry + architecture check | Verified | `apps/no-ai-slop/app/system/` |
+
+v1.1 added **zero external dependencies** and modified **no existing kernel
+behavior** (all pre-existing tests pass unmodified).
+
 "Verified" here means: builds clean, typechecks clean, lints clean, and is
 exercised by passing automated tests and/or a real run captured as evidence.
 

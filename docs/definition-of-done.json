@@ -1,6 +1,6 @@
 {
-  "$comment": "Machine-readable Definition of Done for No AI Slop v1. status is one of: verified | partially_implemented | blocked | not_tested. 'automatable' items can be checked by the referenced command/test; others require infrastructure not present in this environment.",
-  "version": "0.1.0",
+  "$comment": "Machine-readable Definition of Done for No AI Slop. status is one of: verified | partially_implemented | blocked | not_tested. 'automatable' items can be checked by the referenced command/test; others require infrastructure not present in this environment.",
+  "version": "1.1.0",
   "items": [
     {
       "id": "dod.evidence.sealed",
@@ -78,6 +78,48 @@
       "status": "verified",
       "automatable": true,
       "evidence": "nas demo (exit 0, tamper -> BLOCKED); packages/cli/src/cli.test.ts"
+    },
+    {
+      "id": "dod.system.registry_valid",
+      "statement": "The design system is a machine-readable, referentially-valid registry (tokens by tier, components by atomic level, patterns, owners, exceptions) that cannot drift from tokens.css or the exported components.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/ui/src/registry.test.ts; packages/contracts/src/design-system.test.ts; node scripts/check-design-system.mjs exits 0"
+    },
+    {
+      "id": "dod.system.raw_value_budget",
+      "statement": "Governed UI paths contain zero raw color/spacing/radius/typography values except owned, expiring, mirror-tested exceptions.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "node scripts/check-design-system.mjs (DS_RAW_VALUE findings block); packages/anti-slop/src/checks/design-system.test.ts"
+    },
+    {
+      "id": "dod.system.architecture_rules",
+      "statement": "Dependency direction is machine-checked: strictly downward layers, explicit justified exceptions, cycle detection; an intentional forbidden fixture fails.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/anti-slop/src/checks/architecture.test.ts; packages/cli/src/repo-system.test.ts; node scripts/check-architecture.mjs exits 0"
+    },
+    {
+      "id": "dod.system.impact_report",
+      "statement": "A changed file maps deterministically to impacted modules, anti-slop dimensions, and required evidence kinds.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/anti-slop/src/checks/impact.test.ts; node scripts/check-architecture.mjs --impact <file>"
+    },
+    {
+      "id": "dod.system.control_plane_view",
+      "statement": "The control plane renders the live registry, registry validation, and architecture check on /system with zero serious/critical accessibility violations.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "apps/no-ai-slop/e2e/browser-check.mjs (16 axe scans incl. /system); apps/no-ai-slop/app/lib/system.ts"
+    },
+    {
+      "id": "dod.system.governance_state_machine",
+      "statement": "Product-language contributions move through a typed state machine; high-impact changes cannot be self-published; exceptions require expiry.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/contracts/src/governance.test.ts"
     },
     {
       "id": "dod.project.import_github",

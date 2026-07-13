@@ -20,15 +20,15 @@ typechecks clean, lints clean, and is exercised by passing tests and/or real run
 
 | Package | What it is |
 | --- | --- |
-| `@nas/contracts` | Authoritative types + Zod schemas — the single source of truth |
+| `@nas/contracts` | Authoritative types + Zod schemas — the single source of truth, including the design-system, architecture, and governance contracts |
 | `@nas/crypto` | Canonical JSON, sha256 content addressing, HMAC signing |
 | `@nas/kernel-evidence` | **TC-17** — content-addressed, hash-chained, signed evidence |
 | `@nas/kernel-authz` | **TC-07** — deny-by-default least-privilege authorization |
 | `@nas/kernel-release` | **TC-10** — signed, fail-closed release-gate decisions |
-| `@nas/anti-slop` | The 13-dimension anti-slop review engine (no hidden score) |
-| `@nas/ui` | Design system: contrast-tested tokens + component library |
+| `@nas/anti-slop` | The 13-dimension anti-slop review engine + pure system checks (design system, architecture, change impact) — no hidden score |
+| `@nas/ui` | Design system: contrast-tested tokens, components, and the machine-readable registry (`designSystemRegistry`) |
 | `@nas/cli` (`nas`) | Seal evidence · run anti-slop · evaluate the release gate |
-| `apps/no-ai-slop` | Next.js control-plane app surfacing **real** kernel output |
+| `apps/no-ai-slop` | Next.js control-plane app surfacing **real** kernel output, including the live `/system` registry + architecture view |
 
 **What is _not_ claimed:** live Railway deployment, multi-tenant persistence,
 container-isolated agent workspaces, and external beta are designed for but
@@ -56,8 +56,13 @@ Three invariants hold, by construction and by test:
 ```bash
 pnpm install
 pnpm build          # tsc -b across all packages (project references)
-pnpm test           # 97 unit/contract tests (Vitest)
+pnpm test           # 178 unit/contract/system tests (Vitest)
 pnpm typecheck && pnpm lint
+
+# The machine-readable product system, enforced:
+pnpm check:design-system    # registry integrity + raw-value scan + artifact freshness
+pnpm check:architecture     # layer rules + scanned dependency graph
+node scripts/check-architecture.mjs --impact <changed-file...>   # deterministic impact report
 
 # Run the whole control lifecycle end-to-end, in-memory, through the real kernels:
 export NAS_SIGNING_KEY="a-local-dev-signing-key-16+chars"
@@ -80,20 +85,28 @@ packages/
   kernel-evidence/  TC-17 evidence integrity & chain of custody
   kernel-authz/     TC-07 agent authorization & least privilege
   kernel-release/   TC-10 release-gate correctness
-  anti-slop/        13-dimension anti-slop review engine
-  ui/               design tokens (contrast-tested) + components
-  cli/              the `nas` command line
+  anti-slop/        13-dimension review engine + checks/ (design system, architecture, impact)
+  ui/               design tokens (contrast-tested) + components + registry.ts
+  cli/              the `nas` command line + repo-system test suite
 apps/
   no-ai-slop/       Next.js control-plane app + browser/a11y harness
-docs/               definition-of-done.json, dependency + ADR log
+docs/
+  adr/              architecture decision records
+  architecture/     layer-rules.json + generated observed-dependencies.json
+  design-system/    README, governance, metrics + generated registry.json
+scripts/            dod.mjs, check-architecture.mjs, check-design-system.mjs
 ```
 
 ## Documentation
 
-- [`V1_SCOPE.md`](V1_SCOPE.md) — what v1 is and is not (with honest status).
+- [`V1_SCOPE.md`](V1_SCOPE.md) — what v1/v1.1 is and is not (with honest status).
 - [`DEFINITION_OF_DONE.md`](DEFINITION_OF_DONE.md) — the machine-readable success contract.
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — package graph, trust boundaries, data flow.
 - [`NO_AI_SLOP_DESIGN_DOCTRINE.md`](NO_AI_SLOP_DESIGN_DOCTRINE.md) — the design standard.
+- [`docs/design-system/README.md`](docs/design-system/README.md) — the machine-readable registry, checks, and limits.
+- [`docs/design-system/governance.md`](docs/design-system/governance.md) — how the product language evolves.
+- [`docs/design-system/metrics.md`](docs/design-system/metrics.md) — measured vs. honestly not-tested metrics.
+- [`docs/adr/ADR-0001-machine-readable-product-system.md`](docs/adr/ADR-0001-machine-readable-product-system.md) — the v1.1 decision record.
 - [`docs/DEPENDENCIES.md`](docs/DEPENDENCIES.md) — why each dependency exists.
 
 ## Status vocabulary
