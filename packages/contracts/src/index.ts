@@ -11,3 +11,7 @@ export * from './authz.js';
 export * from './anti-slop.js';
 export * from './findings.js';
 export * from './release.js';
+export * from './design-system.js';
+export * from './architecture.js';
+export * from './governance.js';
+export * from './system-finding.js';
