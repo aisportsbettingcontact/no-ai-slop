@@ -56,7 +56,7 @@ Three invariants hold, by construction and by test:
 ```bash
 pnpm install
 pnpm build          # tsc -b across all packages (project references)
-pnpm test           # 178 unit/contract/system tests (Vitest)
+pnpm test           # 193 unit/contract/system tests (Vitest)
 pnpm typecheck && pnpm lint
 
 # The machine-readable product system, enforced:
