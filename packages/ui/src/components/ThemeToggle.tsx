@@ -32,8 +32,7 @@ export function ThemeToggle() {
   return (
     <button
       type="button"
-      className="nas-btn nas-btn--ghost"
-      style={{ minHeight: 36, padding: '0 var(--nas-space-4)' }}
+      className="nas-btn nas-btn--ghost nas-btn--compact"
       aria-label={`Switch to ${next} theme`}
       onClick={() => setTheme(next)}
     >

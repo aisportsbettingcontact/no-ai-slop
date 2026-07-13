@@ -46,6 +46,8 @@
   --nas-weight-semibold: 600;
   --nas-leading-tight: 1.2;
   --nas-leading-normal: 1.5;
+  --nas-tracking-tight: -0.01em;
+  --nas-tracking-wide: 0.06em;
 
   /* Spacing scale (mirror of tokens.ts spacing) */
   --nas-space-1: 2px;
@@ -72,8 +74,18 @@
   --nas-motion-normal: 200ms;
   --nas-ease: cubic-bezier(0.2, 0, 0, 1);
 
+  /* Interaction sizes + states */
+  --nas-size-control: 40px;
+  --nas-size-control-compact: 36px;
+  --nas-size-card-min: 280px;
+  --nas-size-label-min: 120px;
+  --nas-focus-ring-width: 2px;
+  --nas-focus-ring-offset: 2px;
+  --nas-opacity-disabled: 0.5;
+
   /* Layout */
   --nas-content-max: 1120px;
+  --nas-measure-max: 60ch;
   --nas-sidebar-width: 240px;
   --nas-z-nav: 100;
   --nas-z-overlay: 200;
