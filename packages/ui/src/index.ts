@@ -19,3 +19,4 @@ export {
   type KeyValueItem,
 } from './components/primitives.js';
 export { ThemeToggle } from './components/ThemeToggle.js';
+export { designSystemRegistry } from './registry.js';

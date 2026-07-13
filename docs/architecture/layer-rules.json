@@ -1,0 +1,143 @@
+{
+  "$comment": "Machine-readable architecture rules (validated by ArchitectureRules in @nas/contracts). Dependencies must point to a strictly lower layer order; every same-or-upward edge must be an explicit, justified exception here. scripts/check-architecture.mjs scans the repository and enforces these rules; @nas/anti-slop checkArchitecture() is the pure decision function.",
+  "schemaVersion": 1,
+  "layers": [
+    {
+      "id": "layer.foundation",
+      "name": "Foundations",
+      "description": "Contracts (types + runtime schemas) and cryptographic primitives. Depend on nothing above the runtime.",
+      "order": 0
+    },
+    {
+      "id": "layer.kernels",
+      "name": "Kernels and engines",
+      "description": "TC-17 evidence, TC-07 authorization, TC-10 release gate, and the anti-slop engine. Pure domain logic over foundations.",
+      "order": 1
+    },
+    {
+      "id": "layer.system",
+      "name": "Design system",
+      "description": "Tokens, components, and the machine-readable registry. Presentation vocabulary, no kernel knowledge.",
+      "order": 2
+    },
+    {
+      "id": "layer.interface",
+      "name": "Interfaces",
+      "description": "The nas CLI and the control-plane app. Compose kernels and the design system; own no domain rules.",
+      "order": 3
+    }
+  ],
+  "modules": [
+    {
+      "id": "@nas/contracts",
+      "layerId": "layer.foundation",
+      "path": "packages/contracts",
+      "purpose": "Single source of truth for domain types and runtime schemas.",
+      "dimensionsOnChange": ["code_clarity", "maintainability", "test_depth"],
+      "evidenceOnChange": ["test"]
+    },
+    {
+      "id": "@nas/crypto",
+      "layerId": "layer.foundation",
+      "path": "packages/crypto",
+      "purpose": "Canonical JSON, sha256 content addressing, HMAC signing.",
+      "dimensionsOnChange": ["security_impact", "code_clarity", "test_depth"],
+      "evidenceOnChange": ["test"]
+    },
+    {
+      "id": "@nas/kernel-evidence",
+      "layerId": "layer.kernels",
+      "path": "packages/kernel-evidence",
+      "purpose": "TC-17: content-addressed, hash-chained, signed evidence.",
+      "dimensionsOnChange": [
+        "security_impact",
+        "architecture_depth",
+        "test_depth",
+        "evidence_completeness"
+      ],
+      "evidenceOnChange": ["test"]
+    },
+    {
+      "id": "@nas/kernel-authz",
+      "layerId": "layer.kernels",
+      "path": "packages/kernel-authz",
+      "purpose": "TC-07: deny-by-default, least-privilege authorization.",
+      "dimensionsOnChange": ["security_impact", "architecture_depth", "test_depth"],
+      "evidenceOnChange": ["test"]
+    },
+    {
+      "id": "@nas/kernel-release",
+      "layerId": "layer.kernels",
+      "path": "packages/kernel-release",
+      "purpose": "TC-10: signed, fail-closed release decisions.",
+      "dimensionsOnChange": [
+        "security_impact",
+        "architecture_depth",
+        "test_depth",
+        "evidence_completeness"
+      ],
+      "evidenceOnChange": ["test"]
+    },
+    {
+      "id": "@nas/anti-slop",
+      "layerId": "layer.kernels",
+      "path": "packages/anti-slop",
+      "purpose": "Thirteen-dimension anti-slop review engine and system checks.",
+      "dimensionsOnChange": ["product_correctness", "architecture_depth", "test_depth"],
+      "evidenceOnChange": ["test"]
+    },
+    {
+      "id": "@nas/ui",
+      "layerId": "layer.system",
+      "path": "packages/ui",
+      "purpose": "Design tokens, components, and the design-system registry.",
+      "dimensionsOnChange": [
+        "design_consistency",
+        "design_originality",
+        "interaction_quality",
+        "responsive_quality",
+        "accessibility"
+      ],
+      "evidenceOnChange": ["test", "accessibility_result"]
+    },
+    {
+      "id": "@nas/cli",
+      "layerId": "layer.interface",
+      "path": "packages/cli",
+      "purpose": "The nas command line: evidence, anti-slop, gate, demo.",
+      "dimensionsOnChange": [
+        "product_correctness",
+        "code_clarity",
+        "test_depth",
+        "operational_impact"
+      ],
+      "evidenceOnChange": ["test", "command"]
+    },
+    {
+      "id": "@nas/app",
+      "layerId": "layer.interface",
+      "path": "apps/no-ai-slop",
+      "purpose": "The control-plane web application.",
+      "dimensionsOnChange": [
+        "product_correctness",
+        "design_consistency",
+        "interaction_quality",
+        "responsive_quality",
+        "accessibility"
+      ],
+      "evidenceOnChange": ["build", "browser_run", "accessibility_result", "screenshot"]
+    }
+  ],
+  "allowedExceptions": [
+    {
+      "from": "@nas/kernel-authz",
+      "to": "@nas/kernel-evidence",
+      "rationale": "TC-07 seals every authorization decision as TC-17 evidence; audit receipts are part of the chain of custody."
+    },
+    {
+      "from": "@nas/kernel-release",
+      "to": "@nas/kernel-evidence",
+      "rationale": "TC-10 re-verifies the evidence chain itself rather than trusting a caller-supplied validity flag."
+    }
+  ]
+}

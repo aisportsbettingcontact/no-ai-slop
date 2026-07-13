@@ -1,0 +1,37 @@
+{
+  "id": "dec_0fed251c-0801-4c91-a27a-e82868b36983",
+  "verdict": "pass",
+  "manifest": {
+    "buildId": "build_v1_1_25551cb81f50",
+    "orgId": "org_nas",
+    "projectId": "proj_no_ai_slop",
+    "artifactDigest": "sha256:8ac1647083336e765314d08bc62072c14392fbb882291da4859f50bfd42df08f",
+    "sourceCommit": "25551cb81f503cb49cc2bbb6afc112a335253c1a",
+    "targetEnvironment": "staging",
+    "createdAt": "2026-07-13T20:58:23.317Z",
+    "createdBy": {
+      "kind": "agent",
+      "id": "agent.fable-implementer",
+      "displayName": "Implementation Agent"
+    }
+  },
+  "blocking": [],
+  "warnings": [],
+  "inputsDigest": "sha256:ba41d91ebcbf7c43adc0a8f871dcf0775156effde8c2700224dbc8305929f497",
+  "evaluatedAt": "2026-07-13T20:58:23.412Z",
+  "evaluatedBy": {
+    "kind": "agent",
+    "id": "agent.release",
+    "displayName": "Release Agent"
+  },
+  "signedBy": {
+    "kind": "agent",
+    "id": "agent.nas-cli",
+    "displayName": "nas CLI"
+  },
+  "signature": {
+    "keyId": "key_local_1",
+    "algorithm": "hmac-sha256",
+    "value": "09cd4ca28b8bfdb82bff945f1a3155bb0800843d7a66fc5edb1fd49fef3d4a5f"
+  }
+}

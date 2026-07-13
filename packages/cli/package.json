@@ -32,6 +32,7 @@
     "@nas/kernel-release": "workspace:*"
   },
   "devDependencies": {
+    "@nas/ui": "workspace:*",
     "typescript": "5.7.2"
   }
 }

@@ -18,7 +18,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "gate": "pnpm --filter @nas/cli run gate"
+    "gate": "pnpm --filter @nas/cli run gate",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "check:design-system": "node scripts/check-design-system.mjs"
   },
   "devDependencies": {
     "@types/node": "22.10.2",

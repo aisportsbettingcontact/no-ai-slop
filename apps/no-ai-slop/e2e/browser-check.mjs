@@ -33,6 +33,7 @@ const ROUTES = [
   { path: '/', name: 'overview' },
   { path: '/release', name: 'release' },
   { path: '/evidence', name: 'evidence' },
+  { path: '/system', name: 'system' },
 ];
 
 const VIEWPORTS = [

@@ -1,0 +1,183 @@
+/**
+ * Architecture scanner + gate.
+ *
+ * Scans the workspace deterministically (package manifests + static imports)
+ * into an ObservedDependencyGraph, checks it against
+ * docs/architecture/layer-rules.json using the pure checker in @nas/anti-slop,
+ * and keeps the committed scan artifact fresh.
+ *
+ *   node scripts/check-architecture.mjs            verify: rules + committed artifact + report
+ *   node scripts/check-architecture.mjs --write    regenerate docs/architecture/observed-dependencies.json
+ *   node scripts/check-architecture.mjs --impact <file...>   print an ImpactReport (JSON) for changed files
+ *   node scripts/check-architecture.mjs --json     print the ArchitectureReport as JSON
+ *
+ * Exit codes: 0 clean · 1 violations or stale artifact.
+ *
+ * Known limits (documented, not hidden): only static `import ... from` /
+ * side-effect `import '...'` specifiers and workspace manifest dependencies are
+ * observed; a dynamic import() with a computed specifier would be missed.
+ */
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const repoRoot = fileURLToPath(new URL('..', import.meta.url));
+const RULES_PATH = 'docs/architecture/layer-rules.json';
+const ARTIFACT_PATH = 'docs/architecture/observed-dependencies.json';
+const SOURCE_EXTENSIONS = ['.ts', '.tsx', '.css', '.mjs'];
+const EXCLUDED_DIRS = new Set(['node_modules', 'dist', '.next']);
+
+/** Workspace module roots, discovered from pnpm-workspace globs (packages/*, apps/*). */
+export function discoverModules(root = repoRoot) {
+  const modules = [];
+  for (const group of ['packages', 'apps']) {
+    for (const entry of readdirSync(join(root, group)).sort()) {
+      const dir = join(root, group, entry);
+      const manifestPath = join(dir, 'package.json');
+      if (!statSync(dir).isDirectory() || !existsSync(manifestPath)) continue;
+      const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+      modules.push({
+        id: manifest.name,
+        path: `${group}/${entry}`,
+        // devDependencies count: a dev-time import is still an architecture edge.
+        dependencies: Object.keys({
+          ...manifest.dependencies,
+          ...manifest.peerDependencies,
+          ...manifest.devDependencies,
+        }).filter((name) => name.startsWith('@nas/')),
+        dir,
+      });
+    }
+  }
+  return modules;
+}
+
+function walkSourceFiles(dir, out) {
+  for (const entry of readdirSync(dir).sort()) {
+    if (EXCLUDED_DIRS.has(entry)) continue;
+    const full = join(dir, entry);
+    if (statSync(full).isDirectory()) {
+      walkSourceFiles(full, out);
+    } else if (SOURCE_EXTENSIONS.some((ext) => entry.endsWith(ext))) {
+      out.push(full);
+    }
+  }
+  return out;
+}
+
+/**
+ * Multi-line-safe dependency patterns. `from '...'` catches every static
+ * import/export-from regardless of Prettier line wrapping; the second pattern
+ * catches side-effect imports AND dynamic import('...') literals; the third
+ * catches require('...'). Computed specifiers remain a documented blind spot.
+ */
+const DEPENDENCY_PATTERNS = [
+  /\bfrom\s*['"](@nas\/[a-z0-9-]+)(?:\/[^'"]*)?['"]/g,
+  /\bimport\s*\(?\s*['"](@nas\/[a-z0-9-]+)(?:\/[^'"]*)?['"]/g,
+  /\brequire\s*\(\s*['"](@nas\/[a-z0-9-]+)(?:\/[^'"]*)?['"]/g,
+];
+
+/**
+ * Deterministic scan: manifests + static imports → an ObservedDependencyGraph-
+ * shaped object. Pure data out; schema validation happens at the call site so
+ * this module stays importable without built packages (tests import it directly).
+ */
+export function scanGraph(root = repoRoot) {
+  const modules = discoverModules(root);
+  const knownIds = new Set(modules.map((m) => m.id));
+  const moduleFiles = {};
+  const edges = new Set();
+
+  for (const module of modules) {
+    const files = walkSourceFiles(module.dir, []).map((f) =>
+      relative(root, f).split('\\').join('/'),
+    );
+    moduleFiles[module.id] = files.sort();
+
+    for (const dep of module.dependencies) {
+      if (knownIds.has(dep) && dep !== module.id) edges.add(`${module.id} -> ${dep}`);
+    }
+    for (const file of files) {
+      const source = readFileSync(join(root, file), 'utf8');
+      for (const pattern of DEPENDENCY_PATTERNS) {
+        for (const match of source.matchAll(pattern)) {
+          const dep = match[1];
+          if (knownIds.has(dep) && dep !== module.id) edges.add(`${module.id} -> ${dep}`);
+        }
+      }
+    }
+  }
+
+  return {
+    schemaVersion: 1,
+    generatedBy: 'scripts/check-architecture.mjs',
+    moduleFiles,
+    dependencies: [...edges].sort().map((key) => {
+      const [from, to] = key.split(' -> ');
+      return { from, to };
+    }),
+  };
+}
+
+export function loadRules(root = repoRoot) {
+  return JSON.parse(readFileSync(join(root, RULES_PATH), 'utf8'));
+}
+
+async function main() {
+  const args = process.argv.slice(2);
+  const { ArchitectureRules, ObservedDependencyGraph } = await import(
+    new URL('../packages/contracts/dist/index.js', import.meta.url).href
+  );
+  const { checkArchitecture, computeImpact } = await import(
+    new URL('../packages/anti-slop/dist/index.js', import.meta.url).href
+  );
+  const rules = ArchitectureRules.parse(loadRules());
+  const graph = ObservedDependencyGraph.parse(scanGraph());
+
+  if (args[0] === '--impact') {
+    const changed = args.slice(1);
+    const report = computeImpact(rules, graph, changed);
+    console.log(JSON.stringify(report, null, 2));
+    return 0;
+  }
+
+  const serialized = `${JSON.stringify(graph, null, 2)}\n`;
+  if (args.includes('--write')) {
+    writeFileSync(join(repoRoot, ARTIFACT_PATH), serialized, 'utf8');
+    console.log(`wrote ${ARTIFACT_PATH} (${graph.dependencies.length} edges)`);
+  } else {
+    let committed = null;
+    try {
+      committed = readFileSync(join(repoRoot, ARTIFACT_PATH), 'utf8');
+    } catch {
+      console.error(`✗ ${ARTIFACT_PATH} is missing — run with --write and commit it`);
+      return 1;
+    }
+    if (committed !== serialized) {
+      console.error(`✗ ${ARTIFACT_PATH} is stale — run with --write and commit the diff`);
+      return 1;
+    }
+  }
+
+  const report = checkArchitecture(rules, graph);
+  if (args.includes('--json')) {
+    console.log(JSON.stringify(report, null, 2));
+  } else {
+    console.log(
+      `architecture: ${report.checkedModules} modules, ${report.checkedEdges} edges, ` +
+        `${report.exceptionsApplied.length} justified exception(s) applied`,
+    );
+    for (const exception of report.exceptionsApplied) {
+      console.log(`  ~ ${exception.from} → ${exception.to} (${exception.rationale})`);
+    }
+    for (const violation of report.violations) {
+      console.error(`  ✗ [${violation.code}] ${violation.message}`);
+    }
+    console.log(report.valid ? '✓ dependency direction holds' : '✗ architecture violations found');
+  }
+  return report.valid ? 0 : 1;
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  process.exit(await main());
+}

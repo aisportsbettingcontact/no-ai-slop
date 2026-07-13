@@ -1,0 +1,1864 @@
+{
+  "$comment": "GENERATED from packages/ui/src/registry.ts by scripts/check-design-system.mjs --write. Do not edit by hand; the freshness check fails on drift.",
+  "digest": "sha256:03e3c90c4d6fa1403947423dc23e3e8c7b0b958d5b559be0f72659c6fd130e62",
+  "registry": {
+    "schemaVersion": 1,
+    "name": "No AI Slop Design System",
+    "version": "1.1.0",
+    "principles": [
+      {
+        "id": "principle.radical-clarity",
+        "name": "Radical clarity",
+        "statement": "Every screen answers one dominant question a user actually has.",
+        "rationale": "The control plane exists to answer \"can I trust this change?\" — decoration that does not serve that question is removed."
+      },
+      {
+        "id": "principle.one-primary-action",
+        "name": "One primary action",
+        "statement": "Each screen shows at most one primary (accent) action.",
+        "rationale": "Competing primary actions dilute the decision the screen exists to support."
+      },
+      {
+        "id": "principle.hierarchy-without-decoration",
+        "name": "Hierarchy through type and space",
+        "statement": "Visual hierarchy comes from the type scale and spacing scale, not decoration.",
+        "rationale": "Gradients, glass, and glow are generic AI-slop tells; restrained neutrals keep evidence legible."
+      },
+      {
+        "id": "principle.closed-scales",
+        "name": "Closed scales",
+        "statement": "Type, spacing, radius, and motion values come from the token scales; arbitrary values are findings.",
+        "rationale": "Arbitrary values are how systems fragment one commit at a time."
+      },
+      {
+        "id": "principle.status-not-color-alone",
+        "name": "Status is never color alone",
+        "statement": "Every status renders a text label and/or symbol alongside its tone.",
+        "rationale": "WCAG 1.4.1, and color-blind operators must read release verdicts correctly."
+      },
+      {
+        "id": "principle.explicit-states",
+        "name": "Explicit states",
+        "statement": "Loading, empty, error, and blocked states are designed explicitly — never a blank void.",
+        "rationale": "An undesigned state is an undesigned decision left to chance in production."
+      },
+      {
+        "id": "principle.progressive-disclosure",
+        "name": "Progressive disclosure",
+        "statement": "Primary workflows show conclusions; raw detail (digests, full lists) sits one intentional step deeper.",
+        "rationale": "Operators need answers first, reconstruction second — but always both."
+      },
+      {
+        "id": "principle.evidence-backed",
+        "name": "Evidence-backed claims",
+        "statement": "Interface claims about builds, checks, or decisions trace to sealed evidence.",
+        "rationale": "The product exists to make unproven claims impossible to miss."
+      }
+    ],
+    "owners": [
+      {
+        "id": "owner.design-systems",
+        "name": "Design Systems",
+        "responsibility": "Owns @nas/ui: tokens, atoms/molecules, registry accuracy, and token exceptions."
+      },
+      {
+        "id": "owner.control-plane",
+        "name": "Control Plane",
+        "responsibility": "Owns apps/no-ai-slop: templates, pages, navigation, and page-level composition."
+      }
+    ],
+    "tokens": [
+      {
+        "id": "color.bg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "App background.",
+        "valueByTheme": {
+          "light": "#fbfbfd",
+          "dark": "#0b0b0c"
+        },
+        "cssVariable": "--nas-bg"
+      },
+      {
+        "id": "color.surface",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Card / panel surface.",
+        "valueByTheme": {
+          "light": "#ffffff",
+          "dark": "#161618"
+        },
+        "cssVariable": "--nas-surface"
+      },
+      {
+        "id": "color.surface-2",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Raised / hover surface.",
+        "valueByTheme": {
+          "light": "#f4f4f6",
+          "dark": "#1f1f22"
+        },
+        "cssVariable": "--nas-surface-2"
+      },
+      {
+        "id": "color.border",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Hairline borders and dividers.",
+        "valueByTheme": {
+          "light": "#d9d9de",
+          "dark": "#38383c"
+        },
+        "cssVariable": "--nas-border"
+      },
+      {
+        "id": "color.text",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Primary text.",
+        "valueByTheme": {
+          "light": "#1d1d1f",
+          "dark": "#f5f5f7"
+        },
+        "cssVariable": "--nas-text"
+      },
+      {
+        "id": "color.text-secondary",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Supporting text; still meets 4.5:1.",
+        "valueByTheme": {
+          "light": "#54545a",
+          "dark": "#b0b0b6"
+        },
+        "cssVariable": "--nas-text-secondary"
+      },
+      {
+        "id": "color.text-tertiary",
+        "tier": "semantic",
+        "category": "color",
+        "description": "De-emphasized labels (eyebrows, captions).",
+        "valueByTheme": {
+          "light": "#6e6e73",
+          "dark": "#98989f"
+        },
+        "cssVariable": "--nas-text-tertiary"
+      },
+      {
+        "id": "color.accent",
+        "tier": "semantic",
+        "category": "color",
+        "description": "THE single action accent (mint). Reserved for the one primary action.",
+        "valueByTheme": {
+          "light": "#0a7c6d",
+          "dark": "#2dd4bf"
+        },
+        "cssVariable": "--nas-accent"
+      },
+      {
+        "id": "color.accent-hover",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Hover shade of the action accent.",
+        "valueByTheme": {
+          "light": "#086253",
+          "dark": "#4ee0cd"
+        },
+        "cssVariable": "--nas-accent-hover"
+      },
+      {
+        "id": "color.on-accent",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Text/icon color on the accent fill (4.5:1 on accent).",
+        "valueByTheme": {
+          "light": "#ffffff",
+          "dark": "#04241f"
+        },
+        "cssVariable": "--nas-on-accent"
+      },
+      {
+        "id": "color.focus",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Focus-ring color.",
+        "valueByTheme": {
+          "light": "#0a7c6d",
+          "dark": "#2dd4bf"
+        },
+        "cssVariable": "--nas-focus"
+      },
+      {
+        "id": "status.success.fg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Success foreground (on its tinted background).",
+        "valueByTheme": {
+          "light": "#0f7a37",
+          "dark": "#6ee7a0"
+        },
+        "cssVariable": "--nas-success-fg"
+      },
+      {
+        "id": "status.success.bg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Success tinted background.",
+        "valueByTheme": {
+          "light": "#e6f4ea",
+          "dark": "#10331d"
+        },
+        "cssVariable": "--nas-success-bg"
+      },
+      {
+        "id": "status.warning.fg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Warning foreground.",
+        "valueByTheme": {
+          "light": "#8a6100",
+          "dark": "#f0c651"
+        },
+        "cssVariable": "--nas-warning-fg"
+      },
+      {
+        "id": "status.warning.bg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Warning tinted background.",
+        "valueByTheme": {
+          "light": "#fbefd6",
+          "dark": "#332808"
+        },
+        "cssVariable": "--nas-warning-bg"
+      },
+      {
+        "id": "status.danger.fg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Danger/blocked foreground.",
+        "valueByTheme": {
+          "light": "#b3261e",
+          "dark": "#f6a49c"
+        },
+        "cssVariable": "--nas-danger-fg"
+      },
+      {
+        "id": "status.danger.bg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Danger/blocked tinted background.",
+        "valueByTheme": {
+          "light": "#fce8e6",
+          "dark": "#3a1614"
+        },
+        "cssVariable": "--nas-danger-bg"
+      },
+      {
+        "id": "status.info.fg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Informational foreground.",
+        "valueByTheme": {
+          "light": "#1b56b3",
+          "dark": "#9dbef5"
+        },
+        "cssVariable": "--nas-info-fg"
+      },
+      {
+        "id": "status.info.bg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Informational tinted background.",
+        "valueByTheme": {
+          "light": "#e7effb",
+          "dark": "#12233f"
+        },
+        "cssVariable": "--nas-info-bg"
+      },
+      {
+        "id": "status.neutral.fg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Neutral/not-tested foreground.",
+        "valueByTheme": {
+          "light": "#4b4b50",
+          "dark": "#b0b0b6"
+        },
+        "cssVariable": "--nas-neutral-fg"
+      },
+      {
+        "id": "status.neutral.bg",
+        "tier": "semantic",
+        "category": "color",
+        "description": "Neutral/not-tested tinted background.",
+        "valueByTheme": {
+          "light": "#eeeef0",
+          "dark": "#242427"
+        },
+        "cssVariable": "--nas-neutral-bg"
+      },
+      {
+        "id": "type.family.sans",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "UI text stack (system fonts; no webfont payload).",
+        "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif",
+        "cssVariable": "--nas-font-sans"
+      },
+      {
+        "id": "type.family.mono",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Monospace stack for digests, ids, and code.",
+        "value": "ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace",
+        "cssVariable": "--nas-font-mono"
+      },
+      {
+        "id": "type.size.xs",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Captions, badges.",
+        "value": "0.75rem",
+        "cssVariable": "--nas-text-xs"
+      },
+      {
+        "id": "type.size.sm",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Secondary text.",
+        "value": "0.8125rem",
+        "cssVariable": "--nas-text-sm"
+      },
+      {
+        "id": "type.size.base",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Body text.",
+        "value": "0.9375rem",
+        "cssVariable": "--nas-text-base"
+      },
+      {
+        "id": "type.size.lg",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Card titles.",
+        "value": "1.0625rem",
+        "cssVariable": "--nas-text-lg"
+      },
+      {
+        "id": "type.size.xl",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Section titles.",
+        "value": "1.375rem",
+        "cssVariable": "--nas-text-xl"
+      },
+      {
+        "id": "type.size.2xl",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Page titles.",
+        "value": "1.75rem",
+        "cssVariable": "--nas-text-2xl"
+      },
+      {
+        "id": "type.size.3xl",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Hero numerals.",
+        "value": "2.25rem",
+        "cssVariable": "--nas-text-3xl"
+      },
+      {
+        "id": "type.weight.regular",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Body weight.",
+        "value": "400",
+        "cssVariable": "--nas-weight-regular"
+      },
+      {
+        "id": "type.weight.medium",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Labels, buttons.",
+        "value": "500",
+        "cssVariable": "--nas-weight-medium"
+      },
+      {
+        "id": "type.weight.semibold",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Titles; the heaviest weight in the system.",
+        "value": "600",
+        "cssVariable": "--nas-weight-semibold"
+      },
+      {
+        "id": "type.leading.tight",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Headings.",
+        "value": "1.2",
+        "cssVariable": "--nas-leading-tight"
+      },
+      {
+        "id": "type.leading.normal",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Body copy.",
+        "value": "1.5",
+        "cssVariable": "--nas-leading-normal"
+      },
+      {
+        "id": "type.tracking.tight",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Large titles pull in slightly.",
+        "value": "-0.01em",
+        "cssVariable": "--nas-tracking-tight"
+      },
+      {
+        "id": "type.tracking.wide",
+        "tier": "primitive",
+        "category": "typography",
+        "description": "Uppercase eyebrows open up.",
+        "value": "0.06em",
+        "cssVariable": "--nas-tracking-wide"
+      },
+      {
+        "id": "space.0",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Zero spacing.",
+        "value": "0"
+      },
+      {
+        "id": "space.1",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 1 (2px).",
+        "value": "2px",
+        "cssVariable": "--nas-space-1"
+      },
+      {
+        "id": "space.2",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 2 (4px).",
+        "value": "4px",
+        "cssVariable": "--nas-space-2"
+      },
+      {
+        "id": "space.3",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 3 (8px).",
+        "value": "8px",
+        "cssVariable": "--nas-space-3"
+      },
+      {
+        "id": "space.4",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 4 (12px).",
+        "value": "12px",
+        "cssVariable": "--nas-space-4"
+      },
+      {
+        "id": "space.5",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 5 (16px).",
+        "value": "16px",
+        "cssVariable": "--nas-space-5"
+      },
+      {
+        "id": "space.6",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 6 (20px).",
+        "value": "20px",
+        "cssVariable": "--nas-space-6"
+      },
+      {
+        "id": "space.7",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 7 (24px).",
+        "value": "24px",
+        "cssVariable": "--nas-space-7"
+      },
+      {
+        "id": "space.8",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 8 (32px).",
+        "value": "32px",
+        "cssVariable": "--nas-space-8"
+      },
+      {
+        "id": "space.9",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 9 (40px).",
+        "value": "40px",
+        "cssVariable": "--nas-space-9"
+      },
+      {
+        "id": "space.10",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 10 (48px).",
+        "value": "48px",
+        "cssVariable": "--nas-space-10"
+      },
+      {
+        "id": "space.11",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 11 (64px).",
+        "value": "64px",
+        "cssVariable": "--nas-space-11"
+      },
+      {
+        "id": "space.12",
+        "tier": "primitive",
+        "category": "spacing",
+        "description": "Spacing scale step 12 (80px).",
+        "value": "80px"
+      },
+      {
+        "id": "radius.sm",
+        "tier": "primitive",
+        "category": "radius",
+        "description": "Focus-ring corners, small chips.",
+        "value": "6px",
+        "cssVariable": "--nas-radius-sm"
+      },
+      {
+        "id": "radius.md",
+        "tier": "primitive",
+        "category": "radius",
+        "description": "Buttons, nav links.",
+        "value": "10px",
+        "cssVariable": "--nas-radius-md"
+      },
+      {
+        "id": "radius.lg",
+        "tier": "primitive",
+        "category": "radius",
+        "description": "Cards and panels.",
+        "value": "14px",
+        "cssVariable": "--nas-radius-lg"
+      },
+      {
+        "id": "radius.full",
+        "tier": "primitive",
+        "category": "radius",
+        "description": "Pills and badges.",
+        "value": "999px",
+        "cssVariable": "--nas-radius-full"
+      },
+      {
+        "id": "border.width",
+        "tier": "primitive",
+        "category": "border",
+        "description": "Hairline border width.",
+        "value": "1px",
+        "cssVariable": "--nas-border-width"
+      },
+      {
+        "id": "shadow.sm",
+        "tier": "semantic",
+        "category": "shadow",
+        "description": "Resting card elevation (deeper in dark theme).",
+        "valueByTheme": {
+          "light": "0 1px 2px rgba(0, 0, 0, 0.06)",
+          "dark": "0 1px 2px rgba(0, 0, 0, 0.4)"
+        },
+        "cssVariable": "--nas-shadow-sm"
+      },
+      {
+        "id": "shadow.md",
+        "tier": "semantic",
+        "category": "shadow",
+        "description": "Raised elevation for overlays.",
+        "valueByTheme": {
+          "light": "0 4px 16px rgba(0, 0, 0, 0.08)",
+          "dark": "0 4px 16px rgba(0, 0, 0, 0.5)"
+        },
+        "cssVariable": "--nas-shadow-md"
+      },
+      {
+        "id": "motion.fast",
+        "tier": "primitive",
+        "category": "motion",
+        "description": "Hover/press feedback.",
+        "value": "120ms",
+        "cssVariable": "--nas-motion-fast"
+      },
+      {
+        "id": "motion.normal",
+        "tier": "primitive",
+        "category": "motion",
+        "description": "Panel transitions.",
+        "value": "200ms",
+        "cssVariable": "--nas-motion-normal"
+      },
+      {
+        "id": "motion.ease",
+        "tier": "primitive",
+        "category": "motion",
+        "description": "The single easing curve.",
+        "value": "cubic-bezier(0.2, 0, 0, 1)",
+        "cssVariable": "--nas-ease"
+      },
+      {
+        "id": "size.control",
+        "tier": "semantic",
+        "category": "size",
+        "description": "Minimum interactive control height (touch target).",
+        "value": "40px",
+        "cssVariable": "--nas-size-control"
+      },
+      {
+        "id": "size.control-compact",
+        "tier": "semantic",
+        "category": "size",
+        "description": "Reduced control height for secondary chrome controls only.",
+        "value": "36px",
+        "cssVariable": "--nas-size-control-compact"
+      },
+      {
+        "id": "size.card-min",
+        "tier": "semantic",
+        "category": "size",
+        "description": "Minimum card width in responsive auto-fit grids.",
+        "value": "280px",
+        "cssVariable": "--nas-size-card-min"
+      },
+      {
+        "id": "size.label-min",
+        "tier": "semantic",
+        "category": "size",
+        "description": "Minimum label column width in definition lists.",
+        "value": "120px",
+        "cssVariable": "--nas-size-label-min"
+      },
+      {
+        "id": "size.focus-ring-width",
+        "tier": "semantic",
+        "category": "size",
+        "description": "Focus-ring outline width.",
+        "value": "2px",
+        "cssVariable": "--nas-focus-ring-width"
+      },
+      {
+        "id": "size.focus-ring-offset",
+        "tier": "semantic",
+        "category": "size",
+        "description": "Focus-ring outline offset.",
+        "value": "2px",
+        "cssVariable": "--nas-focus-ring-offset"
+      },
+      {
+        "id": "opacity.disabled",
+        "tier": "semantic",
+        "category": "opacity",
+        "description": "Disabled-control opacity (paired with cursor + aria state, never alone).",
+        "value": "0.5",
+        "cssVariable": "--nas-opacity-disabled"
+      },
+      {
+        "id": "layout.content-max",
+        "tier": "semantic",
+        "category": "layout",
+        "description": "Main content column.",
+        "value": "1120px",
+        "cssVariable": "--nas-content-max"
+      },
+      {
+        "id": "layout.measure-max",
+        "tier": "semantic",
+        "category": "layout",
+        "description": "Maximum reading measure for descriptions.",
+        "value": "60ch",
+        "cssVariable": "--nas-measure-max"
+      },
+      {
+        "id": "layout.sidebar-width",
+        "tier": "semantic",
+        "category": "layout",
+        "description": "Desktop sidebar.",
+        "value": "240px",
+        "cssVariable": "--nas-sidebar-width"
+      },
+      {
+        "id": "layout.z-nav",
+        "tier": "semantic",
+        "category": "layout",
+        "description": "Navigation stacking layer.",
+        "value": "100",
+        "cssVariable": "--nas-z-nav"
+      },
+      {
+        "id": "layout.z-overlay",
+        "tier": "semantic",
+        "category": "layout",
+        "description": "Overlay stacking layer.",
+        "value": "200",
+        "cssVariable": "--nas-z-overlay"
+      },
+      {
+        "id": "breakpoint.mobile",
+        "tier": "primitive",
+        "category": "breakpoint",
+        "description": "Min-width breakpoint: mobile (0px). Mobile-first.",
+        "value": "0px"
+      },
+      {
+        "id": "breakpoint.tablet",
+        "tier": "primitive",
+        "category": "breakpoint",
+        "description": "Min-width breakpoint: tablet (768px). Mobile-first.",
+        "value": "768px"
+      },
+      {
+        "id": "breakpoint.desktop",
+        "tier": "primitive",
+        "category": "breakpoint",
+        "description": "Min-width breakpoint: desktop (1024px). Mobile-first.",
+        "value": "1024px"
+      },
+      {
+        "id": "breakpoint.wide",
+        "tier": "primitive",
+        "category": "breakpoint",
+        "description": "Min-width breakpoint: wide (1440px). Mobile-first.",
+        "value": "1440px"
+      }
+    ],
+    "components": [
+      {
+        "id": "component.button",
+        "name": "Button",
+        "atomicLevel": "atom",
+        "category": "input",
+        "purpose": "Trigger exactly one action. The primary variant is the screen’s one accent.",
+        "sourcePath": "packages/ui/src/components/primitives.tsx",
+        "composedOf": [],
+        "variants": [
+          {
+            "name": "primary",
+            "purpose": "The single primary action of a screen (mint accent)."
+          },
+          {
+            "name": "secondary",
+            "purpose": "Supporting actions on a bordered surface."
+          },
+          {
+            "name": "ghost",
+            "purpose": "Low-emphasis chrome actions."
+          },
+          {
+            "name": "compact",
+            "purpose": "First-class boolean prop reducing height for secondary chrome controls (combines with ghost/secondary; never with primary)."
+          }
+        ],
+        "props": [
+          {
+            "name": "variant",
+            "type": "'primary' | 'secondary' | 'ghost'",
+            "required": false,
+            "description": "Visual emphasis; defaults to secondary so primary is always deliberate."
+          },
+          {
+            "name": "compact",
+            "type": "boolean",
+            "required": false,
+            "description": "Reduced height for secondary chrome controls. Never with primary."
+          },
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "required": true,
+            "description": "The action label. Buttons always carry visible text."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Resting fill per variant."
+          },
+          {
+            "state": "hover",
+            "behavior": "Fill deepens via color.accent-hover / color.surface-2."
+          },
+          {
+            "state": "focus_visible",
+            "behavior": "Token focus ring, offset outside the control."
+          },
+          {
+            "state": "disabled",
+            "behavior": "opacity.disabled + not-allowed cursor; disabled attribute set."
+          }
+        ],
+        "usesTokens": [
+          "color.accent",
+          "color.accent-hover",
+          "color.on-accent",
+          "color.surface",
+          "color.surface-2",
+          "color.text",
+          "color.border",
+          "type.weight.medium",
+          "space.3",
+          "space.4",
+          "space.6",
+          "radius.md",
+          "border.width",
+          "motion.fast",
+          "motion.ease",
+          "size.control",
+          "size.control-compact",
+          "opacity.disabled"
+        ],
+        "followsPrinciples": [
+          "principle.one-primary-action",
+          "principle.closed-scales"
+        ],
+        "accessibility": [
+          "rule.focus-visible",
+          "rule.touch-target"
+        ],
+        "responsiveBehavior": "Fixed height; width follows content. No breakpoint changes.",
+        "prohibitedUses": [
+          "More than one primary variant rendered on a single screen",
+          "Combining the compact modifier with the primary variant",
+          "Using a button for pure navigation when a link communicates it better"
+        ],
+        "requiredEvidence": [
+          "test",
+          "accessibility_result"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.badge",
+        "name": "Badge",
+        "atomicLevel": "atom",
+        "category": "feedback",
+        "purpose": "Show a status as label + symbol + tone — the tone alone never carries meaning.",
+        "sourcePath": "packages/ui/src/components/status.tsx",
+        "composedOf": [],
+        "variants": [
+          {
+            "name": "success",
+            "purpose": "Verified / passing states."
+          },
+          {
+            "name": "warning",
+            "purpose": "Documented concerns."
+          },
+          {
+            "name": "danger",
+            "purpose": "Failures and blocked states."
+          },
+          {
+            "name": "info",
+            "purpose": "Neutral verified facts (e.g. signature checks)."
+          },
+          {
+            "name": "neutral",
+            "purpose": "Not-tested / inert states."
+          }
+        ],
+        "props": [
+          {
+            "name": "tone",
+            "type": "StatusTone",
+            "required": true,
+            "description": "Status color pair."
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": true,
+            "description": "The visible text label."
+          },
+          {
+            "name": "symbol",
+            "type": "string",
+            "required": false,
+            "description": "Decorative glyph (aria-hidden); the label carries the meaning."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Static; badges are never interactive."
+          }
+        ],
+        "usesTokens": [
+          "status.success.fg",
+          "status.success.bg",
+          "status.warning.fg",
+          "status.warning.bg",
+          "status.danger.fg",
+          "status.danger.bg",
+          "status.info.fg",
+          "status.info.bg",
+          "status.neutral.fg",
+          "status.neutral.bg",
+          "space.1",
+          "space.2",
+          "space.3",
+          "radius.full",
+          "type.size.xs",
+          "type.weight.medium",
+          "type.weight.semibold",
+          "type.leading.normal"
+        ],
+        "followsPrinciples": [
+          "principle.status-not-color-alone"
+        ],
+        "accessibility": [
+          "rule.status-not-color-alone",
+          "rule.contrast-aa"
+        ],
+        "responsiveBehavior": "Inline pill; wraps with its line, never truncates its label.",
+        "prohibitedUses": [
+          "Communicating status with tone alone (label or symbol is mandatory)",
+          "Making a badge clickable — use a Button or link instead",
+          "Metric-wall decoration: a badge must answer a decision question"
+        ],
+        "requiredEvidence": [
+          "test",
+          "accessibility_result"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.verdict-badge",
+        "name": "VerdictBadge",
+        "atomicLevel": "molecule",
+        "category": "feedback",
+        "purpose": "Map a TC-10 release verdict to the badge vocabulary (pass/warning/fail/blocked).",
+        "sourcePath": "packages/ui/src/components/status.tsx",
+        "composedOf": [
+          "component.badge"
+        ],
+        "variants": [],
+        "props": [
+          {
+            "name": "verdict",
+            "type": "ReleaseVerdict",
+            "required": true,
+            "description": "The signed gate verdict to display."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Static mapping via verdictMeta."
+          }
+        ],
+        "usesTokens": [],
+        "followsPrinciples": [
+          "principle.status-not-color-alone",
+          "principle.evidence-backed"
+        ],
+        "accessibility": [
+          "rule.status-not-color-alone"
+        ],
+        "responsiveBehavior": "Inherits Badge.",
+        "prohibitedUses": [
+          "Displaying a verdict that is not a real kernel output"
+        ],
+        "requiredEvidence": [
+          "test"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.grade-badge",
+        "name": "GradeBadge",
+        "atomicLevel": "molecule",
+        "category": "feedback",
+        "purpose": "Map an anti-slop dimension grade to the badge vocabulary.",
+        "sourcePath": "packages/ui/src/components/status.tsx",
+        "composedOf": [
+          "component.badge"
+        ],
+        "variants": [],
+        "props": [
+          {
+            "name": "grade",
+            "type": "Grade",
+            "required": true,
+            "description": "pass | pass_with_concern | fail | not_tested."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Static mapping via gradeMeta."
+          }
+        ],
+        "usesTokens": [],
+        "followsPrinciples": [
+          "principle.status-not-color-alone"
+        ],
+        "accessibility": [
+          "rule.status-not-color-alone"
+        ],
+        "responsiveBehavior": "Inherits Badge.",
+        "prohibitedUses": [
+          "Collapsing multiple dimension grades into one badge"
+        ],
+        "requiredEvidence": [
+          "test"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.card",
+        "name": "Card",
+        "atomicLevel": "molecule",
+        "category": "layout",
+        "purpose": "Group one topic (title, optional subtitle/action) on a bordered surface.",
+        "sourcePath": "packages/ui/src/components/primitives.tsx",
+        "composedOf": [],
+        "variants": [],
+        "props": [
+          {
+            "name": "title",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Card heading (h2)."
+          },
+          {
+            "name": "subtitle",
+            "type": "ReactNode",
+            "required": false,
+            "description": "One-line qualifier under the title."
+          },
+          {
+            "name": "action",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Trailing badge or control aligned with the title."
+          },
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "required": true,
+            "description": "Card body."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Static surface; no hover elevation games."
+          }
+        ],
+        "usesTokens": [
+          "color.surface",
+          "color.border",
+          "border.width",
+          "radius.lg",
+          "space.1",
+          "space.4",
+          "space.5",
+          "space.7",
+          "shadow.sm",
+          "type.size.lg",
+          "type.size.sm",
+          "type.weight.semibold",
+          "type.leading.tight",
+          "color.text-secondary"
+        ],
+        "followsPrinciples": [
+          "principle.hierarchy-without-decoration",
+          "principle.radical-clarity"
+        ],
+        "accessibility": [
+          "rule.contrast-aa"
+        ],
+        "responsiveBehavior": "Fills its grid track; grids collapse via auto-fit at size.card-min.",
+        "prohibitedUses": [
+          "Nesting cards inside cards",
+          "Using a card as a click target (cards are containers, not buttons)"
+        ],
+        "requiredEvidence": [
+          "test",
+          "accessibility_result"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.page-header",
+        "name": "PageHeader",
+        "atomicLevel": "molecule",
+        "category": "layout",
+        "purpose": "Open every screen with the same structure: eyebrow, single h1, measure-limited description, optional single action.",
+        "sourcePath": "packages/ui/src/components/primitives.tsx",
+        "composedOf": [],
+        "variants": [],
+        "props": [
+          {
+            "name": "eyebrow",
+            "type": "string",
+            "required": false,
+            "description": "Uppercase context label above the title."
+          },
+          {
+            "name": "title",
+            "type": "string",
+            "required": true,
+            "description": "The one h1 per page."
+          },
+          {
+            "name": "description",
+            "type": "string",
+            "required": false,
+            "description": "What this screen answers, in one or two sentences."
+          },
+          {
+            "name": "action",
+            "type": "ReactNode",
+            "required": false,
+            "description": "Trailing slot: the screen’s single primary action, or its overall status badge — never more than one element."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Static header with bottom divider."
+          }
+        ],
+        "usesTokens": [
+          "space.2",
+          "space.4",
+          "space.6",
+          "border.width",
+          "color.border",
+          "type.size.xs",
+          "type.tracking.wide",
+          "color.text-tertiary",
+          "type.weight.medium",
+          "type.size.2xl",
+          "type.weight.semibold",
+          "type.leading.tight",
+          "type.tracking.tight",
+          "color.text-secondary",
+          "layout.measure-max"
+        ],
+        "followsPrinciples": [
+          "principle.radical-clarity",
+          "principle.one-primary-action",
+          "principle.hierarchy-without-decoration"
+        ],
+        "accessibility": [
+          "rule.single-h1"
+        ],
+        "responsiveBehavior": "Title and action wrap on narrow viewports; description keeps measure.",
+        "prohibitedUses": [
+          "More than one PageHeader per screen",
+          "Placing multiple actions in the action slot"
+        ],
+        "requiredEvidence": [
+          "test",
+          "accessibility_result"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.key-value",
+        "name": "KeyValue",
+        "atomicLevel": "molecule",
+        "category": "data_display",
+        "purpose": "Present attributable facts (build ids, digests, commits) as a definition list.",
+        "sourcePath": "packages/ui/src/components/primitives.tsx",
+        "composedOf": [],
+        "variants": [],
+        "props": [
+          {
+            "name": "items",
+            "type": "KeyValueItem[]",
+            "required": true,
+            "description": "Label/value pairs; values may embed badges or mono spans."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Two-column grid; values wrap anywhere (digests)."
+          }
+        ],
+        "usesTokens": [
+          "space.3",
+          "space.6",
+          "color.text-secondary",
+          "type.size.sm",
+          "size.label-min"
+        ],
+        "followsPrinciples": [
+          "principle.evidence-backed",
+          "principle.radical-clarity"
+        ],
+        "accessibility": [
+          "rule.contrast-aa"
+        ],
+        "responsiveBehavior": "Grid keeps a min label column; long values wrap, never overflow.",
+        "prohibitedUses": [
+          "Free-form prose in values — facts only"
+        ],
+        "requiredEvidence": [
+          "test"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.reason-list",
+        "name": "ReasonList",
+        "atomicLevel": "molecule",
+        "category": "data_display",
+        "purpose": "List reasons/findings with a leading status and an EXPLICIT empty state — never a blank void.",
+        "sourcePath": "packages/ui/src/components/primitives.tsx",
+        "composedOf": [],
+        "variants": [],
+        "props": [
+          {
+            "name": "items",
+            "type": "{ key; leading?; primary; secondary? }[]",
+            "required": true,
+            "description": "Reasons with optional leading badge and secondary mono detail."
+          },
+          {
+            "name": "emptyLabel",
+            "type": "string",
+            "required": true,
+            "description": "REQUIRED text shown when there are zero items."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Divided rows with leading status element."
+          },
+          {
+            "state": "empty",
+            "behavior": "Renders emptyLabel as muted text — mandatory prop."
+          }
+        ],
+        "usesTokens": [
+          "space.1",
+          "space.3",
+          "space.4",
+          "border.width",
+          "color.border",
+          "color.text-secondary",
+          "type.family.mono",
+          "type.size.sm"
+        ],
+        "followsPrinciples": [
+          "principle.explicit-states",
+          "principle.evidence-backed"
+        ],
+        "accessibility": [
+          "rule.contrast-aa"
+        ],
+        "responsiveBehavior": "Rows stack their secondary detail under the primary on any width.",
+        "prohibitedUses": [
+          "Omitting emptyLabel semantics by passing a decorative placeholder"
+        ],
+        "requiredEvidence": [
+          "test"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "packages/ui/src/components/components.test.tsx"
+        ]
+      },
+      {
+        "id": "component.theme-toggle",
+        "name": "ThemeToggle",
+        "atomicLevel": "molecule",
+        "category": "input",
+        "purpose": "Switch light/dark explicitly; defaults to the OS preference until the user chooses.",
+        "sourcePath": "packages/ui/src/components/ThemeToggle.tsx",
+        "composedOf": [
+          "component.button"
+        ],
+        "variants": [],
+        "props": [],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Shows the theme it will switch TO, with an aria-label."
+          },
+          {
+            "state": "hover",
+            "behavior": "Ghost-button hover surface."
+          },
+          {
+            "state": "focus_visible",
+            "behavior": "Token focus ring."
+          }
+        ],
+        "usesTokens": [
+          "size.control-compact",
+          "space.4"
+        ],
+        "followsPrinciples": [
+          "principle.closed-scales"
+        ],
+        "accessibility": [
+          "rule.focus-visible"
+        ],
+        "responsiveBehavior": "Compact ghost button; identical at all widths.",
+        "prohibitedUses": [
+          "Auto-switching the theme without an explicit user action"
+        ],
+        "requiredEvidence": [
+          "browser_run"
+        ],
+        "ownerId": "owner.design-systems",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      },
+      {
+        "id": "component.nav-links",
+        "name": "NavLinks",
+        "atomicLevel": "organism",
+        "category": "navigation",
+        "purpose": "Primary navigation listing only screens that exist; marks the current page for AT via aria-current.",
+        "sourcePath": "apps/no-ai-slop/app/components/NavLinks.tsx",
+        "composedOf": [],
+        "variants": [],
+        "props": [],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Vertical list (desktop), wrapping row (below desktop)."
+          },
+          {
+            "state": "hover",
+            "behavior": "surface-2 hover fill."
+          },
+          {
+            "state": "active",
+            "behavior": "Current page gets surface-2 fill + aria-current=\"page\"."
+          },
+          {
+            "state": "focus_visible",
+            "behavior": "Token focus ring."
+          }
+        ],
+        "usesTokens": [
+          "space.1",
+          "space.2",
+          "space.3",
+          "space.4",
+          "radius.md",
+          "color.text-secondary",
+          "color.text",
+          "color.surface-2",
+          "type.size.sm",
+          "type.weight.medium",
+          "size.control"
+        ],
+        "followsPrinciples": [
+          "principle.radical-clarity"
+        ],
+        "accessibility": [
+          "rule.aria-current-nav",
+          "rule.focus-visible",
+          "rule.touch-target"
+        ],
+        "responsiveBehavior": "Column in the sidebar; wraps horizontally under the top bar < 1024px.",
+        "prohibitedUses": [
+          "Nav items for screens that do not exist yet"
+        ],
+        "requiredEvidence": [
+          "browser_run",
+          "accessibility_result"
+        ],
+        "ownerId": "owner.control-plane",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      },
+      {
+        "id": "component.app-shell",
+        "name": "AppShell",
+        "atomicLevel": "template",
+        "category": "layout",
+        "purpose": "The one persistent structure: brand + theme control + navigation beside a measured main column.",
+        "sourcePath": "apps/no-ai-slop/app/components/AppShell.tsx",
+        "composedOf": [
+          "component.nav-links",
+          "component.theme-toggle"
+        ],
+        "variants": [],
+        "props": [
+          {
+            "name": "children",
+            "type": "ReactNode",
+            "required": true,
+            "description": "The page content."
+          }
+        ],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Sticky sidebar (desktop) / static top bar (mobile)."
+          }
+        ],
+        "usesTokens": [
+          "layout.sidebar-width",
+          "layout.content-max",
+          "border.width",
+          "color.border",
+          "color.surface",
+          "space.4",
+          "space.5",
+          "space.6",
+          "space.9",
+          "type.weight.semibold",
+          "type.size.lg",
+          "type.tracking.tight",
+          "breakpoint.desktop"
+        ],
+        "followsPrinciples": [
+          "principle.radical-clarity",
+          "principle.hierarchy-without-decoration"
+        ],
+        "accessibility": [
+          "rule.focus-visible"
+        ],
+        "responsiveBehavior": "Structure adapts: sidebar becomes a top bar below breakpoint.desktop instead of shrinking.",
+        "prohibitedUses": [
+          "Rendering a page outside the shell"
+        ],
+        "requiredEvidence": [
+          "browser_run",
+          "accessibility_result",
+          "screenshot"
+        ],
+        "ownerId": "owner.control-plane",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      },
+      {
+        "id": "component.page-overview",
+        "name": "OverviewPage",
+        "atomicLevel": "page",
+        "category": "data_display",
+        "purpose": "Answer: is this build ready, and what proves it? Entry point to the decision.",
+        "sourcePath": "apps/no-ai-slop/app/page.tsx",
+        "composedOf": [
+          "component.app-shell",
+          "component.page-header",
+          "component.card",
+          "component.key-value",
+          "component.badge",
+          "component.verdict-badge"
+        ],
+        "variants": [],
+        "props": [],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Renders real kernel output for the sample lifecycle."
+          }
+        ],
+        "usesTokens": [
+          "space.6",
+          "space.8",
+          "size.card-min"
+        ],
+        "followsPrinciples": [
+          "principle.radical-clarity",
+          "principle.one-primary-action",
+          "principle.evidence-backed"
+        ],
+        "accessibility": [
+          "rule.single-h1"
+        ],
+        "responsiveBehavior": "Card grid auto-fits at size.card-min; single column on mobile.",
+        "prohibitedUses": [
+          "Adding metrics that do not change a release decision"
+        ],
+        "requiredEvidence": [
+          "browser_run",
+          "accessibility_result",
+          "screenshot"
+        ],
+        "ownerId": "owner.control-plane",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      },
+      {
+        "id": "component.page-release",
+        "name": "ReleasePage",
+        "atomicLevel": "page",
+        "category": "data_display",
+        "purpose": "Show the signed staging + production decisions with exact blocking reasons and every dimension grade.",
+        "sourcePath": "apps/no-ai-slop/app/release/page.tsx",
+        "composedOf": [
+          "component.app-shell",
+          "component.page-header",
+          "component.card",
+          "component.key-value",
+          "component.reason-list",
+          "component.badge",
+          "component.verdict-badge",
+          "component.grade-badge"
+        ],
+        "variants": [],
+        "props": [],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Real TC-10 decisions; blocked production shown honestly."
+          },
+          {
+            "state": "empty",
+            "behavior": "ReasonList renders explicit empty labels for zero reasons."
+          }
+        ],
+        "usesTokens": [
+          "space.1",
+          "space.3",
+          "space.8",
+          "type.size.base",
+          "type.size.sm"
+        ],
+        "followsPrinciples": [
+          "principle.evidence-backed",
+          "principle.explicit-states"
+        ],
+        "accessibility": [
+          "rule.single-h1"
+        ],
+        "responsiveBehavior": "Cards stack; key-value values wrap digests on narrow screens.",
+        "prohibitedUses": [
+          "Hiding a blocking reason behind an aggregate"
+        ],
+        "requiredEvidence": [
+          "browser_run",
+          "accessibility_result",
+          "screenshot"
+        ],
+        "ownerId": "owner.control-plane",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      },
+      {
+        "id": "component.page-evidence",
+        "name": "EvidencePage",
+        "atomicLevel": "page",
+        "category": "data_display",
+        "purpose": "Show the sealed TC-17 chain in order, with digests, and its live verification.",
+        "sourcePath": "apps/no-ai-slop/app/evidence/page.tsx",
+        "composedOf": [
+          "component.app-shell",
+          "component.page-header",
+          "component.card",
+          "component.badge"
+        ],
+        "variants": [],
+        "props": [],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Chain records in sequence with kind labels + digests."
+          },
+          {
+            "state": "error",
+            "behavior": "Header badge flips to \"Chain invalid\" when verification fails."
+          }
+        ],
+        "usesTokens": [
+          "space.1",
+          "space.3",
+          "space.8",
+          "type.size.xs"
+        ],
+        "followsPrinciples": [
+          "principle.evidence-backed",
+          "principle.progressive-disclosure"
+        ],
+        "accessibility": [
+          "rule.single-h1"
+        ],
+        "responsiveBehavior": "Digests truncate with ellipsis; summaries wrap.",
+        "prohibitedUses": [
+          "Rendering evidence that failed signature verification as valid"
+        ],
+        "requiredEvidence": [
+          "browser_run",
+          "accessibility_result",
+          "screenshot"
+        ],
+        "ownerId": "owner.control-plane",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      },
+      {
+        "id": "component.page-system",
+        "name": "SystemPage",
+        "atomicLevel": "page",
+        "category": "data_display",
+        "purpose": "Answer: is the product system itself coherent? Renders the live registry validation, tokens, components, patterns, architecture check, and exceptions.",
+        "sourcePath": "apps/no-ai-slop/app/system/page.tsx",
+        "composedOf": [
+          "component.app-shell",
+          "component.page-header",
+          "component.card",
+          "component.key-value",
+          "component.reason-list",
+          "component.badge"
+        ],
+        "variants": [],
+        "props": [],
+        "states": [
+          {
+            "state": "default",
+            "behavior": "Live validateDesignSystemRegistry + architecture check."
+          },
+          {
+            "state": "error",
+            "behavior": "Validation problems render as danger findings, never hidden."
+          },
+          {
+            "state": "empty",
+            "behavior": "Zero-violation lists state that explicitly."
+          }
+        ],
+        "usesTokens": [
+          "space.1",
+          "space.3",
+          "space.6",
+          "space.8",
+          "size.card-min",
+          "type.size.base",
+          "type.size.sm"
+        ],
+        "followsPrinciples": [
+          "principle.progressive-disclosure",
+          "principle.evidence-backed",
+          "principle.explicit-states"
+        ],
+        "accessibility": [
+          "rule.single-h1",
+          "rule.focus-visible"
+        ],
+        "responsiveBehavior": "Disclosure sections stack; token tables scroll inside their region.",
+        "prohibitedUses": [
+          "Turning the registry into a decorative component gallery"
+        ],
+        "requiredEvidence": [
+          "browser_run",
+          "accessibility_result",
+          "screenshot"
+        ],
+        "ownerId": "owner.control-plane",
+        "version": "1.1.0",
+        "status": "stable",
+        "tests": [
+          "apps/no-ai-slop/e2e/browser-check.mjs"
+        ]
+      }
+    ],
+    "patterns": [
+      {
+        "id": "pattern.status-badge",
+        "name": "Status vocabulary",
+        "kind": "functional",
+        "purpose": "One shared mapping from verdicts/grades to label + symbol + tone.",
+        "consistsOf": [
+          "component.badge",
+          "component.verdict-badge",
+          "component.grade-badge"
+        ],
+        "usesTokens": [],
+        "conditionsOfUse": "Any status shown anywhere uses this vocabulary; new statuses extend the mapping, never invent ad-hoc colors."
+      },
+      {
+        "id": "pattern.one-primary-action",
+        "name": "One primary action",
+        "kind": "functional",
+        "purpose": "Each screen exposes at most one accent action, usually in the PageHeader slot.",
+        "consistsOf": [
+          "component.page-header",
+          "component.button"
+        ],
+        "usesTokens": [
+          "color.accent"
+        ],
+        "conditionsOfUse": "Screens with no dominant action render no primary button at all."
+      },
+      {
+        "id": "pattern.explicit-empty-state",
+        "name": "Explicit empty state",
+        "kind": "functional",
+        "purpose": "Zero-item lists say so in words instead of rendering a void.",
+        "consistsOf": [
+          "component.reason-list"
+        ],
+        "usesTokens": [],
+        "conditionsOfUse": "Every list that can be empty must supply a meaningful emptyLabel."
+      },
+      {
+        "id": "pattern.evidence-reference",
+        "name": "Evidence reference",
+        "kind": "functional",
+        "purpose": "Material claims render alongside their digest / evidence identifier in mono.",
+        "consistsOf": [
+          "component.key-value",
+          "component.reason-list"
+        ],
+        "usesTokens": [
+          "type.family.mono"
+        ],
+        "conditionsOfUse": "Applies to builds, checks, decisions, and any \"verified\" claim."
+      },
+      {
+        "id": "pattern.card-grid",
+        "name": "Card grid",
+        "kind": "perceptual",
+        "purpose": "Summary cards in a responsive auto-fit grid that collapses to one column.",
+        "consistsOf": [
+          "component.card"
+        ],
+        "usesTokens": [
+          "size.card-min",
+          "space.6"
+        ],
+        "conditionsOfUse": "Use for peer summaries only; never for a wall of vanity metrics."
+      },
+      {
+        "id": "pattern.progressive-disclosure",
+        "name": "Progressive disclosure",
+        "kind": "functional",
+        "purpose": "Conclusions render first; full inventories (tokens, records) expand behind a native disclosure.",
+        "consistsOf": [
+          "component.card"
+        ],
+        "usesTokens": [],
+        "conditionsOfUse": "Detail must remain reachable by keyboard (native <details>/<summary>) and never hide failures."
+      }
+    ],
+    "accessibilityRules": [
+      {
+        "id": "rule.focus-visible",
+        "requirement": "Every interactive element shows a visible focus indicator.",
+        "wcagCriterion": "2.4.7",
+        "verification": "base.css :focus-visible tokens + e2e/browser-check.mjs axe scans."
+      },
+      {
+        "id": "rule.touch-target",
+        "requirement": "Interactive controls are at least size.control (40px) tall; compact (36px) only for secondary chrome.",
+        "wcagCriterion": "2.5.8",
+        "verification": "base.css min-height tokens on .nas-btn and .nas-nav__link; rendered-height measurement is manual review (not yet automated)."
+      },
+      {
+        "id": "rule.contrast-aa",
+        "requirement": "Text meets 4.5:1 and UI accents 3:1 in both themes.",
+        "wcagCriterion": "1.4.3",
+        "verification": "packages/ui/src/tokens.test.ts contrast assertions."
+      },
+      {
+        "id": "rule.status-not-color-alone",
+        "requirement": "Status is conveyed by label/symbol plus tone, never tone alone.",
+        "wcagCriterion": "1.4.1",
+        "verification": "packages/ui/src/components/components.test.tsx badge assertions."
+      },
+      {
+        "id": "rule.reduced-motion",
+        "requirement": "All animation and transitions collapse under prefers-reduced-motion.",
+        "wcagCriterion": "2.3.3",
+        "verification": "base.css reduced-motion block."
+      },
+      {
+        "id": "rule.aria-current-nav",
+        "requirement": "The current page is marked with aria-current=\"page\" in primary navigation.",
+        "verification": "NavLinks implementation + e2e/browser-check.mjs."
+      },
+      {
+        "id": "rule.single-h1",
+        "requirement": "Every screen renders exactly one h1.",
+        "verification": "e2e/browser-check.mjs structure assertion on every route."
+      }
+    ],
+    "exceptions": [
+      {
+        "id": "exception.breakpoint-media-query",
+        "scope": "packages/ui/src/base.css::1023px",
+        "rationale": "CSS media queries cannot read custom properties, so the responsive switch hard-codes (breakpoint.desktop - 1)px. The value is mirror-tested against breakpoint.desktop in registry.test.ts.",
+        "ownerId": "owner.design-systems",
+        "expiresAt": "2027-06-30T00:00:00.000Z",
+        "remediation": "Replace with CSS custom media / env() once baseline browser support lands; until then the mirror test prevents drift."
+      }
+    ]
+  }
+}

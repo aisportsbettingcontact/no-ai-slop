@@ -41,8 +41,8 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--nas-focus);
-  outline-offset: 2px;
+  outline: var(--nas-focus-ring-width) solid var(--nas-focus);
+  outline-offset: var(--nas-focus-ring-offset);
   border-radius: var(--nas-radius-sm);
 }
 
@@ -115,7 +115,7 @@ a {
 .nas-page-header__eyebrow {
   font-size: var(--nas-text-xs);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--nas-tracking-wide);
   color: var(--nas-text-tertiary);
   font-weight: var(--nas-weight-medium);
 }
@@ -123,11 +123,11 @@ a {
   font-size: var(--nas-text-2xl);
   font-weight: var(--nas-weight-semibold);
   line-height: var(--nas-leading-tight);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--nas-tracking-tight);
 }
 .nas-page-header__desc {
   color: var(--nas-text-secondary);
-  max-width: 60ch;
+  max-width: var(--nas-measure-max);
 }
 
 /* ── Buttons ───────────────────────────────────────────────────────────────── */
@@ -136,7 +136,7 @@ a {
   align-items: center;
   justify-content: center;
   gap: var(--nas-space-3);
-  min-height: 40px;
+  min-height: var(--nas-size-control);
   padding: 0 var(--nas-space-6);
   font: inherit;
   font-weight: var(--nas-weight-medium);
@@ -148,8 +148,13 @@ a {
     border-color var(--nas-motion-fast) var(--nas-ease);
 }
 .nas-btn:disabled {
-  opacity: 0.5;
+  opacity: var(--nas-opacity-disabled);
   cursor: not-allowed;
+}
+/* Reduced-height modifier for secondary chrome controls (never the primary action). */
+.nas-btn--compact {
+  min-height: var(--nas-size-control-compact);
+  padding: 0 var(--nas-space-4);
 }
 .nas-btn--primary {
   background: var(--nas-accent);
@@ -179,11 +184,11 @@ a {
   display: inline-flex;
   align-items: center;
   gap: var(--nas-space-2);
-  padding: 2px var(--nas-space-3);
+  padding: var(--nas-space-1) var(--nas-space-3);
   border-radius: var(--nas-radius-full);
   font-size: var(--nas-text-xs);
   font-weight: var(--nas-weight-medium);
-  line-height: 1.6;
+  line-height: var(--nas-leading-normal);
   white-space: nowrap;
 }
 .nas-badge__symbol {
@@ -213,7 +218,7 @@ a {
 /* ── Definition list (key/value) ───────────────────────────────────────────── */
 .nas-kv {
   display: grid;
-  grid-template-columns: minmax(120px, max-content) 1fr;
+  grid-template-columns: minmax(var(--nas-size-label-min), max-content) 1fr;
   gap: var(--nas-space-3) var(--nas-space-6);
   margin: 0;
 }
@@ -266,7 +271,7 @@ a {
 .nas-brand {
   font-weight: var(--nas-weight-semibold);
   font-size: var(--nas-text-lg);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--nas-tracking-tight);
   white-space: nowrap;
 }
 .nas-nav {
@@ -275,6 +280,9 @@ a {
   gap: var(--nas-space-1);
 }
 .nas-nav__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--nas-size-control);
   padding: var(--nas-space-3) var(--nas-space-4);
   border-radius: var(--nas-radius-md);
   color: var(--nas-text-secondary);

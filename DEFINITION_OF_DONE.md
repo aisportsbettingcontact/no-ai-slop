@@ -1,4 +1,4 @@
-# No AI Slop — v1 Definition of Done
+# No AI Slop — Definition of Done (v1.1)
 
 The success contract is machine-readable in [`docs/definition-of-done.json`](docs/definition-of-done.json).
 Each item carries a `status` and the `evidence` that establishes it. Items marked
@@ -20,9 +20,20 @@ node scripts/dod.mjs
 - The release gate consumes only authenticated evidence and issues a signed
   decision; incomplete/unauthenticated inputs never Pass; self-review is blocked.
 - The CLI gate exits fail-closed (0 pass/warning, 2 fail/blocked).
-- The app surfaces real kernel output and passes 12 accessibility scans.
+- The app surfaces real kernel output and passes 16 accessibility scans
+  (4 routes × desktop/mobile × light/dark).
 - Every design token pair meets WCAG 2.2 AA contrast in both themes.
 - The full lifecycle runs end-to-end and blocks under tamper (`nas demo`).
+- The design system is a machine-readable, referentially-valid registry that
+  cannot drift from `tokens.css` or the exported components
+  (`pnpm check:design-system`).
+- Governed UI paths hold zero raw visual values outside owned, expiring,
+  mirror-tested exceptions.
+- Dependency direction is machine-checked (strictly downward layers, justified
+  exceptions, cycle detection); change impact is a deterministic report
+  (`pnpm check:architecture`, `--impact`).
+- The control plane renders the live registry + architecture check on
+  `/system`; governance transitions are a typed, non-self-publish state machine.
 
 ## Blocked / Not tested (require infrastructure not available here)
 
@@ -36,10 +47,13 @@ be added without replacing the verified core.
 
 ## Measurable targets (v1 intent)
 
-| Target | v1 goal | Current |
+| Target | Goal | Current |
 | --- | --- | --- |
 | Anti-slop compliance on merged code | 100% required dimensions graded | Enforced by engine + gate |
-| Accessibility (primary workflows) | 0 serious/critical | 0 (12 axe scans) |
+| Accessibility (primary workflows) | 0 serious/critical | 0 (16 axe scans) |
 | Release gate correctness | Never Pass on incomplete input | Enforced + tested (16 cases) |
 | Evidence reconstructability | Every claim reconstructable | Enforced by TC-17 |
+| Raw visual values in governed paths | 0 unexcepted | 0 (1 owned exception, mirror-tested) |
+| Forbidden dependency edges | 0 | 0 (2 justified same-layer exceptions) |
+| Registry references (tokens/components/owners) | 0 broken | 0 (`validateDesignSystemRegistry`) |
 | Build reproducibility | Deterministic content-addressed builds | Content addressing in place; live deploy Blocked |

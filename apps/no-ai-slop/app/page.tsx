@@ -28,7 +28,7 @@ export default function OverviewPage() {
         style={{
           display: 'grid',
           gap: 'var(--nas-space-6)',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(var(--nas-size-card-min), 1fr))',
         }}
       >
         <Card

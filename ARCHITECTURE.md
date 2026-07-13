@@ -5,6 +5,18 @@ flow one direction: contracts and crypto are the base; kernels build on them; th
 CLI and app compose the kernels. Nothing lower depends on anything higher, and
 there are no circular dependencies.
 
+Since v1.1 this is **machine-checked, not prose**: layers and permitted edges are
+data in [`docs/architecture/layer-rules.json`](docs/architecture/layer-rules.json),
+the observed graph is scanned deterministically into
+[`docs/architecture/observed-dependencies.json`](docs/architecture/observed-dependencies.json)
+(freshness-tested), and `pnpm check:architecture` fails closed on any forbidden
+edge, cycle, or undeclared module. The same-layer kernel edges
+(`kernel-authz → kernel-evidence`, `kernel-release → kernel-evidence`) are
+explicit, justified exceptions — visible in the check output and on the
+control plane's `/system` view.
+`node scripts/check-architecture.mjs --impact <file...>` maps changed files to
+impacted modules, anti-slop dimensions, and required evidence kinds.
+
 ## Package graph
 
 ```mermaid
@@ -99,7 +111,9 @@ sequenceDiagram
 | --- | --- | --- |
 | `@nas/*` kernels, engine, crypto, contracts | Node (pure/library) | Verified |
 | `nas` CLI | Node executable | Verified |
-| Control-plane app | Next.js 14 server + static | Verified (built + run) |
+| Design-system registry + system checks | Pure data + pure functions (`@nas/ui`, `@nas/anti-slop`) | Verified |
+| Architecture / design-system scanners | Node scripts (`scripts/check-*.mjs`) | Verified |
+| Control-plane app (4 routes incl. `/system`) | Next.js 14 server + static | Verified (built + run) |
 | Evidence store | Local filesystem (`.nas/evidence/chain.json`) | Verified |
 | Signing authority | In-process HMAC keyring (interface ready for KMS/HSM) | Verified |
 | Persistence / multi-tenancy | (design only) | Not tested |

@@ -1,0 +1,544 @@
+{
+  "manifest": {
+    "buildId": "build_v1_1_25551cb81f50",
+    "orgId": "org_nas",
+    "projectId": "proj_no_ai_slop",
+    "artifactDigest": "sha256:8ac1647083336e765314d08bc62072c14392fbb882291da4859f50bfd42df08f",
+    "sourceCommit": "25551cb81f503cb49cc2bbb6afc112a335253c1a",
+    "targetEnvironment": "staging",
+    "createdAt": "2026-07-13T20:58:23.317Z",
+    "createdBy": {
+      "kind": "agent",
+      "id": "agent.fable-implementer",
+      "displayName": "Implementation Agent"
+    }
+  },
+  "policy": {
+    "requiredChecks": [
+      "typecheck",
+      "lint",
+      "unit"
+    ],
+    "requiredEvidenceKinds": [
+      "build",
+      "test"
+    ],
+    "requireAntiSlopAccepted": true,
+    "requireIndependentReview": false,
+    "allowIncompleteAsWarning": true
+  },
+  "checks": [
+    {
+      "name": "typecheck",
+      "status": "pass",
+      "evidenceId": "ev_6cf3e004-f1d6-4b99-a57d-53d64dd014a7",
+      "detail": "0 errors"
+    },
+    {
+      "name": "lint",
+      "status": "pass",
+      "evidenceId": "ev_cb091537-973c-447c-a3de-512531a1f2f5",
+      "detail": "0 problems"
+    },
+    {
+      "name": "format",
+      "status": "pass",
+      "evidenceId": "ev_c18870cc-15d3-47ad-8f09-b923f0fc7a7d",
+      "detail": "clean"
+    },
+    {
+      "name": "unit",
+      "status": "pass",
+      "evidenceId": "ev_a4310f4c-fe6c-4bc4-917b-414407643df0",
+      "detail": "193 passed"
+    },
+    {
+      "name": "integration",
+      "status": "pass",
+      "evidenceId": "ev_8e7966f7-ae8e-4173-a1cf-16a01c60642f",
+      "detail": "nas demo end-to-end + repo-system suite"
+    },
+    {
+      "name": "architecture",
+      "status": "pass",
+      "evidenceId": "ev_a58c438e-a9f9-46cb-9dae-41cc00c088de",
+      "detail": "0 violations"
+    },
+    {
+      "name": "design_system",
+      "status": "pass",
+      "evidenceId": "ev_0506be14-e6ce-4c1c-bcbf-dc9268352d35",
+      "detail": "0 findings"
+    },
+    {
+      "name": "accessibility",
+      "status": "pass",
+      "evidenceId": "ev_190e3a22-5800-4ec2-a122-4448ec4cd566",
+      "detail": "16 scans, 0 serious/critical"
+    },
+    {
+      "name": "security",
+      "status": "pass",
+      "evidenceId": "ev_361de11b-893d-40f7-9516-490fc2b94298",
+      "detail": "4/4 adversarial attacks failed closed"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ev_6cf3e004-f1d6-4b99-a57d-53d64dd014a7",
+      "sequence": 0,
+      "createdAt": "2026-07-13T20:58:22.008Z",
+      "input": {
+        "kind": "test",
+        "contentDigest": "sha256:d1928eda23908ecf21141a1e4bfe887edb1bf22be06f4b898805b9539d880fae",
+        "summary": "typecheck — 0 errors across 9 packages + app (v1.1)",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_d5b0bb0a-9eac-47a4-aa79-8dcf8423ce8a"
+        },
+        "metadata": {}
+      },
+      "prevDigest": null,
+      "recordDigest": "sha256:32f808352d04dddbe1bcc3ed84e6f8109957021c708effb1749a3803b7c95690",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "642141e57a58f8c0b6a901f6fb9985940f2ee9efb807f74bb293afa864ef4ee0"
+      }
+    },
+    {
+      "id": "ev_cb091537-973c-447c-a3de-512531a1f2f5",
+      "sequence": 1,
+      "createdAt": "2026-07-13T20:58:22.110Z",
+      "input": {
+        "kind": "test",
+        "contentDigest": "sha256:4d08067ffc988e753942742d60e8e02c03b8ff9ce825ad9fa1bea60e11165fe0",
+        "summary": "lint — 0 problems (eslint, no-explicit-any enforced)",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_00cc0089-e204-4265-81b6-cc4230c93233"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:32f808352d04dddbe1bcc3ed84e6f8109957021c708effb1749a3803b7c95690",
+      "recordDigest": "sha256:08e18c5ac1142001caae1a99b3f39a549add7454d403aa7fcabae0b356dcb817",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "6bd20548364a86b8f7c5e36062dfe8a118b450aff69897f6422fb214ebc2d8e0"
+      }
+    },
+    {
+      "id": "ev_c18870cc-15d3-47ad-8f09-b923f0fc7a7d",
+      "sequence": 2,
+      "createdAt": "2026-07-13T20:58:22.213Z",
+      "input": {
+        "kind": "test",
+        "contentDigest": "sha256:fffef79142eb227aa9f5b7d201e0f53c96857ec7d61fad72b7a1c36c658295ef",
+        "summary": "format — prettier clean",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_06df330b-9baa-4764-b65c-9063b0b38421"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:08e18c5ac1142001caae1a99b3f39a549add7454d403aa7fcabae0b356dcb817",
+      "recordDigest": "sha256:be5feabe76a8dd2a8eb725b495e838fcd6b1453df704df6fec90c72e5b6088c9",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "494363c35f99d368965d11045a3262ac9854a1bf648ba6676622a45647edc69d"
+      }
+    },
+    {
+      "id": "ev_a4310f4c-fe6c-4bc4-917b-414407643df0",
+      "sequence": 3,
+      "createdAt": "2026-07-13T20:58:22.315Z",
+      "input": {
+        "kind": "test",
+        "contentDigest": "sha256:33df74d35cdcad05123bfb18f862401384b9cffb6c17d808b4d816891434b9fe",
+        "summary": "unit/contract/system — 193 passed, 21 files (Vitest)",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_17195cbd-96d0-48f3-be0b-33d7c5d881e5"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:be5feabe76a8dd2a8eb725b495e838fcd6b1453df704df6fec90c72e5b6088c9",
+      "recordDigest": "sha256:75c8c4a07455a0144b2c59976a1b08920e119bf7224c0797a94e2c2c3bd79e8f",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "9cf2d86034a20227b5bc4321d5c0952f4d147e16fb53b34a5ae2c4d4eab73f2d"
+      }
+    },
+    {
+      "id": "ev_a58c438e-a9f9-46cb-9dae-41cc00c088de",
+      "sequence": 4,
+      "createdAt": "2026-07-13T20:58:22.413Z",
+      "input": {
+        "kind": "command",
+        "contentDigest": "sha256:3440e54ab7fde3eab2f9f4ecfe3fbfeed2c192c706b6c97b8c54fc0987a59338",
+        "summary": "architecture check — 9 modules, 23 edges, 0 violations, 2 justified exceptions",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_b04bfc78-7eea-4b31-9eb1-78b0453c0f01"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:75c8c4a07455a0144b2c59976a1b08920e119bf7224c0797a94e2c2c3bd79e8f",
+      "recordDigest": "sha256:e5761438f801d08693b0f42d4187bf9a64c558708f31c0a295971c73100ed202",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "6fc357ddc42f037e6fe44554a69ec60dfe76884a268a0ac7bb7618dbbe961250"
+      }
+    },
+    {
+      "id": "ev_0506be14-e6ce-4c1c-bcbf-dc9268352d35",
+      "sequence": 5,
+      "createdAt": "2026-07-13T20:58:22.515Z",
+      "input": {
+        "kind": "command",
+        "contentDigest": "sha256:6e2ee222337ba7db4aef35bd69f39b81f8a8352fc10a6a2710928329d45a5471",
+        "summary": "design-system check — 76 tokens, 15 components, 0 findings, artifact fresh",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_6ceb0b9c-e731-4dd0-9377-96ffb1237cda"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:e5761438f801d08693b0f42d4187bf9a64c558708f31c0a295971c73100ed202",
+      "recordDigest": "sha256:6a2435c2871999a804308777e2ed13d2966e887769e6408f1ff14ee1cd74c746",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "65f3c654055debbaa88466b054b1016fa65940998f742d3e758fe62833b42f8e"
+      }
+    },
+    {
+      "id": "ev_8e7966f7-ae8e-4173-a1cf-16a01c60642f",
+      "sequence": 6,
+      "createdAt": "2026-07-13T20:58:22.620Z",
+      "input": {
+        "kind": "command",
+        "contentDigest": "sha256:78154a26033c99b50bc030c59f004f7b288704ba4dd65434552b0852623189e3",
+        "summary": "nas demo — full lifecycle end-to-end; tamper flips gate to BLOCKED",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_2672052c-858d-4b01-87ba-402beddb848a"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:6a2435c2871999a804308777e2ed13d2966e887769e6408f1ff14ee1cd74c746",
+      "recordDigest": "sha256:77f041e523dc8f19ef3444cbf279da39e3010961cc8360f03fccf0f482ee4de7",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "4c61abd348389a8ebf1df3fb9b6c9ba753cdcf9016ea8b1e7741618d6ca12ff6"
+      }
+    },
+    {
+      "id": "ev_fb961137-62f4-4462-8f33-66a4c236d13c",
+      "sequence": 7,
+      "createdAt": "2026-07-13T20:58:22.715Z",
+      "input": {
+        "kind": "build",
+        "contentDigest": "sha256:4e41ec29972fa6921ab9431e24f1dd88de9f364cce66a95c9b01a53b11374525",
+        "summary": "pnpm build + next production build — 4 static routes incl. /system",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_22c6d0e6-7769-4627-b4bf-2be7d6e80ad8"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:77f041e523dc8f19ef3444cbf279da39e3010961cc8360f03fccf0f482ee4de7",
+      "recordDigest": "sha256:9a698040e6c3ccb97949489d50c1c1e2cdcd63190ed41c3969df9755baa0c5d1",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "07eeed623ebb3dbe666079839496dc70fef0572d47fb633a8c59198757085e9d"
+      }
+    },
+    {
+      "id": "ev_190e3a22-5800-4ec2-a122-4448ec4cd566",
+      "sequence": 8,
+      "createdAt": "2026-07-13T20:58:22.813Z",
+      "input": {
+        "kind": "accessibility_result",
+        "contentDigest": "sha256:48c8b77cbb5487443f9f02febe1bd165c21794dfb8f59be595c4ccee7da78b3b",
+        "summary": "axe — 16 scans (4 routes × desktop/mobile × light/dark), 0 serious/critical",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_85917555-1bfe-48c8-b15a-ae720310b451"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:9a698040e6c3ccb97949489d50c1c1e2cdcd63190ed41c3969df9755baa0c5d1",
+      "recordDigest": "sha256:4953494a222f9a58485629187cd026a0741f42f2e8f8ae3d9d15e02b995ca1b7",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "f9dd4aa9cc9fa311ca759b895308904606d3bbe43269c334bd64dc454f1a6d78"
+      }
+    },
+    {
+      "id": "ev_f4a291b0-bb7a-400e-a194-2283cc3b306c",
+      "sequence": 9,
+      "createdAt": "2026-07-13T20:58:22.913Z",
+      "input": {
+        "kind": "screenshot",
+        "contentDigest": "sha256:7698345d65abb52a8a2cd201feaaf512016f5ee39304edfc640e8f18e14fc5b9",
+        "summary": "system view — desktop 1440x900 light, full page",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_b531ff2b-0be0-4397-a5bb-615ed4723bc2"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:4953494a222f9a58485629187cd026a0741f42f2e8f8ae3d9d15e02b995ca1b7",
+      "recordDigest": "sha256:e1bb7cc3724f8eaf464648f9dbceda59fe79f3a83dc5ea8334038b1d28f2aa6e",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "fb1fd22f4621b5f2906a0908a75c47ab871d79406540c0957913e2365aef9e6f"
+      }
+    },
+    {
+      "id": "ev_361de11b-893d-40f7-9516-490fc2b94298",
+      "sequence": 10,
+      "createdAt": "2026-07-13T20:58:23.012Z",
+      "input": {
+        "kind": "command",
+        "contentDigest": "sha256:dd097a5245772ad182f45b895a93a55834c33e9a5bc283bb667326102bc3ff48",
+        "summary": "adversarial attacks — 4/4 inline spot-checks + 10 reviewer attacks; every evasion fixed and regression-tested",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_a54f991c-f95c-45cf-9a41-8b27a2e35b4a"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:e1bb7cc3724f8eaf464648f9dbceda59fe79f3a83dc5ea8334038b1d28f2aa6e",
+      "recordDigest": "sha256:9f3b076b46a354ebe0b0290a8366b4bcfd9ffa027b62b04199c30e686f62e529",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "209a0854dcf7de4fd63ac20dcc73bb6ae2886a4e87f543b53feae3e01aac52c1"
+      }
+    },
+    {
+      "id": "ev_f8a1d7dc-f791-4dc6-b7c2-7e11238f87e3",
+      "sequence": 11,
+      "createdAt": "2026-07-13T20:58:23.107Z",
+      "input": {
+        "kind": "human_review",
+        "contentDigest": "sha256:55d8aaeba5291aeabbce68eac19d1736a6685043c983297666d0f0e227cfe518",
+        "summary": "independent adversarial review — 3 non-author reviewers (10 attacks, 5 must-fix findings fixed + re-verified)",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_813a241f-2cfc-4103-965a-2ac42ee601d8"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:9f3b076b46a354ebe0b0290a8366b4bcfd9ffa027b62b04199c30e686f62e529",
+      "recordDigest": "sha256:34fc4ad3cedd682a96e8684e7ff45b83a851ce71704ddba3cb671fbe0901ec9e",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "aca92f4c5235b9d293727cc6985680f8e34f1ea28f7d6032f45f95af8c869a50"
+      }
+    },
+    {
+      "id": "ev_71a8281a-f27d-4e46-a905-ee5ddf2ad902",
+      "sequence": 12,
+      "createdAt": "2026-07-13T20:58:23.306Z",
+      "input": {
+        "kind": "anti_slop_review",
+        "contentDigest": "sha256:9bed195975aa90adc9489233f473d02231030cdc6423b9207d44fed203f2e656",
+        "summary": "anti-slop review — product_feature, 13 dimensions graded, accepted",
+        "producer": {
+          "kind": "agent",
+          "id": "agent.nas-cli",
+          "displayName": "nas CLI"
+        },
+        "context": {
+          "orgId": "org_nas",
+          "projectId": "proj_no_ai_slop",
+          "correlationId": "corr_6f03c4da-02b1-4e05-a903-afd954fd91de"
+        },
+        "metadata": {}
+      },
+      "prevDigest": "sha256:34fc4ad3cedd682a96e8684e7ff45b83a851ce71704ddba3cb671fbe0901ec9e",
+      "signedBy": {
+        "kind": "agent",
+        "id": "agent.nas-cli",
+        "displayName": "nas CLI"
+      },
+      "recordDigest": "sha256:6adb421f9cae6da5452160fcdd1f3cbf12d1d58b1d486d2ed076c3c106cca8b8",
+      "signature": {
+        "keyId": "key_local_1",
+        "algorithm": "hmac-sha256",
+        "value": "76ccca99440234447292f1911dd4ed5d72c7678e96f4651ccc193e117bfc646c"
+      }
+    }
+  ],
+  "antiSlop": {
+    "accepted": true,
+    "changeType": "product_feature",
+    "requiredDimensions": [
+      "product_correctness",
+      "design_consistency",
+      "interaction_quality",
+      "responsive_quality",
+      "accessibility",
+      "code_clarity",
+      "test_depth",
+      "evidence_completeness",
+      "security_impact",
+      "maintainability"
+    ],
+    "blocking": [],
+    "concerns": [],
+    "exceptionsApplied": [],
+    "summary": "Accepted: all required dimensions pass, no failures."
+  },
+  "hardBlockers": [],
+  "riskAcceptances": [],
+  "evaluatedBy": {
+    "kind": "agent",
+    "id": "agent.release",
+    "displayName": "Release Agent"
+  }
+}

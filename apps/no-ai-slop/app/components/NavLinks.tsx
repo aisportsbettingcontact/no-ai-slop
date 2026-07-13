@@ -7,6 +7,7 @@ const ITEMS = [
   { href: '/', label: 'Overview' },
   { href: '/release', label: 'Release decision' },
   { href: '/evidence', label: 'Evidence chain' },
+  { href: '/system', label: 'Product system' },
 ] as const;
 
 /**
