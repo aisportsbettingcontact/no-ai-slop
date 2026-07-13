@@ -1,0 +1,126 @@
+{
+  "changeType": "product_feature",
+  "subject": "Machine-readable product system v1.1 (25551cb81f50)",
+  "reviewer": {
+    "kind": "agent",
+    "id": "agent.adversarial-review",
+    "displayName": "Adversarial Review Panel"
+  },
+  "createdAt": "2026-07-13T20:58:23.117Z",
+  "grades": [
+    {
+      "dimension": "product_correctness",
+      "grade": "pass",
+      "rationale": "System registry, checks, impact, and /system view verified by 178 tests and real runs; live checks render real output.",
+      "evidenceIds": [
+        "ev_a4310f4c-fe6c-4bc4-917b-414407643df0",
+        "ev_8e7966f7-ae8e-4173-a1cf-16a01c60642f"
+      ]
+    },
+    {
+      "dimension": "design_originality",
+      "grade": "pass",
+      "rationale": "Restrained doctrine preserved; no generic AI aesthetics introduced; /system reuses the existing vocabulary.",
+      "evidenceIds": [
+        "ev_f4a291b0-bb7a-400e-a194-2283cc3b306c"
+      ]
+    },
+    {
+      "dimension": "design_consistency",
+      "grade": "pass",
+      "rationale": "Zero unexcepted raw values in governed paths; registry↔CSS sync tests pass in both themes.",
+      "evidenceIds": [
+        "ev_0506be14-e6ce-4c1c-bcbf-dc9268352d35",
+        "ev_a4310f4c-fe6c-4bc4-917b-414407643df0"
+      ]
+    },
+    {
+      "dimension": "interaction_quality",
+      "grade": "pass",
+      "rationale": "Native keyboard-accessible disclosures; focus states tokenized and documented for every interactive component.",
+      "evidenceIds": [
+        "ev_190e3a22-5800-4ec2-a122-4448ec4cd566"
+      ]
+    },
+    {
+      "dimension": "responsive_quality",
+      "grade": "pass",
+      "rationale": "16 scans across desktop/mobile in both themes; structure adapts below the desktop breakpoint.",
+      "evidenceIds": [
+        "ev_190e3a22-5800-4ec2-a122-4448ec4cd566"
+      ]
+    },
+    {
+      "dimension": "accessibility",
+      "grade": "pass",
+      "rationale": "0 serious/critical axe violations on all 4 routes; contrast unit-tested for every token pair.",
+      "evidenceIds": [
+        "ev_190e3a22-5800-4ec2-a122-4448ec4cd566",
+        "ev_a4310f4c-fe6c-4bc4-917b-414407643df0"
+      ]
+    },
+    {
+      "dimension": "code_clarity",
+      "grade": "pass",
+      "rationale": "Typecheck and lint clean under strict settings; pure checkers with injected clocks; no any.",
+      "evidenceIds": [
+        "ev_6cf3e004-f1d6-4b99-a57d-53d64dd014a7",
+        "ev_cb091537-973c-447c-a3de-512531a1f2f5"
+      ]
+    },
+    {
+      "dimension": "architecture_depth",
+      "grade": "pass",
+      "rationale": "Dependency direction machine-checked (0 violations, 2 justified exceptions); the check caught a real violation during development and forced the fix.",
+      "evidenceIds": [
+        "ev_a58c438e-a9f9-46cb-9dae-41cc00c088de"
+      ]
+    },
+    {
+      "dimension": "test_depth",
+      "grade": "pass",
+      "rationale": "193 tests incl. malformed/duplicate/broken-reference/adversarial fixtures and evasion regressions; intentional violations fail closed.",
+      "evidenceIds": [
+        "ev_a4310f4c-fe6c-4bc4-917b-414407643df0",
+        "ev_361de11b-893d-40f7-9516-490fc2b94298"
+      ]
+    },
+    {
+      "dimension": "evidence_completeness",
+      "grade": "pass",
+      "rationale": "Every claim in this review references sealed TC-17 records; artifacts are digest-fresh.",
+      "evidenceIds": [
+        "ev_fb961137-62f4-4462-8f33-66a4c236d13c",
+        "ev_0506be14-e6ce-4c1c-bcbf-dc9268352d35"
+      ]
+    },
+    {
+      "dimension": "security_impact",
+      "grade": "pass",
+      "rationale": "No new dependencies or network surface; tamper/forgery/self-review paths re-verified fail-closed.",
+      "evidenceIds": [
+        "ev_361de11b-893d-40f7-9516-490fc2b94298",
+        "ev_8e7966f7-ae8e-4173-a1cf-16a01c60642f"
+      ]
+    },
+    {
+      "dimension": "operational_impact",
+      "grade": "pass",
+      "rationale": "Checks are deterministic local commands wired into pnpm scripts; generated artifacts freshness-gated in CI-equivalent tests.",
+      "evidenceIds": [
+        "ev_a58c438e-a9f9-46cb-9dae-41cc00c088de",
+        "ev_0506be14-e6ce-4c1c-bcbf-dc9268352d35"
+      ]
+    },
+    {
+      "dimension": "maintainability",
+      "grade": "pass",
+      "rationale": "Registry completeness enforced against exports; docs reconciled; exceptions owned and expiring.",
+      "evidenceIds": [
+        "ev_a4310f4c-fe6c-4bc4-917b-414407643df0",
+        "ev_f8a1d7dc-f791-4dc6-b7c2-7e11238f87e3"
+      ]
+    }
+  ],
+  "exceptions": []
+}

@@ -1,0 +1,20 @@
+{
+  "accepted": true,
+  "changeType": "product_feature",
+  "requiredDimensions": [
+    "product_correctness",
+    "design_consistency",
+    "interaction_quality",
+    "responsive_quality",
+    "accessibility",
+    "code_clarity",
+    "test_depth",
+    "evidence_completeness",
+    "security_impact",
+    "maintainability"
+  ],
+  "blocking": [],
+  "concerns": [],
+  "exceptionsApplied": [],
+  "summary": "Accepted: all required dimensions pass, no failures."
+}

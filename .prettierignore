@@ -7,3 +7,4 @@ pnpm-lock.yaml
 # Generated artifacts (exact-string freshness-checked by their generators)
 docs/design-system/registry.json
 docs/architecture/observed-dependencies.json
+docs/evidence/
