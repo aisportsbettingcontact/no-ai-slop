@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { AntiSlopDimension } from './anti-slop.js';
 import { Severity, SourceLocation } from './findings.js';
 import { EvidenceId } from './ids.js';
+import { InterfacePatternId } from './interface-patterns.js';
 
 /**
  * System findings: structured violations of the machine-readable product system
@@ -21,6 +22,8 @@ export const SystemFindingCode = z.enum([
   'DS_UNDOCUMENTED_STATE',
   'DS_EXCEPTION_EXPIRED',
   'DS_STALE_ARTIFACT',
+  // A hit on the interface anti-pattern catalog (carries patternId).
+  'DS_INTERFACE_PATTERN',
   // Architecture findings
   'ARCH_FORBIDDEN_EDGE',
   'ARCH_CYCLE',
@@ -37,6 +40,8 @@ export const SystemFinding = z.object({
   location: SourceLocation,
   rationale: z.string().min(1).max(1000),
   remediation: z.string().min(1).max(1000),
+  /** Set when code is DS_INTERFACE_PATTERN: the catalog pattern that was hit. */
+  patternId: InterfacePatternId.optional(),
   evidenceIds: z.array(EvidenceId).default([]),
 });
 export type SystemFinding = z.infer<typeof SystemFinding>;
@@ -50,6 +55,13 @@ export const RawValueOccurrence = z.object({
 });
 export type RawValueOccurrence = z.infer<typeof RawValueOccurrence>;
 
+/** A registry-declared file path that does not exist on disk. */
+export const MissingRegistryPath = z.object({
+  componentId: z.string().min(1),
+  path: z.string().min(1).max(300),
+});
+export type MissingRegistryPath = z.infer<typeof MissingRegistryPath>;
+
 /**
  * Facts collected by the design-system scanner (scripts/check-design-system.mjs).
  * The checker in @nas/anti-slop is pure: facts in, findings out — so the same
@@ -59,5 +71,7 @@ export const DesignSystemScanFacts = z.object({
   rawValues: z.array(RawValueOccurrence),
   /** Component names exported by @nas/ui (each must have a registry entry). */
   exportedComponents: z.array(z.string().min(1)),
+  /** Registry sourcePath/tests entries that resolve to no real file. */
+  missingRegistryPaths: z.array(MissingRegistryPath).default([]),
 });
 export type DesignSystemScanFacts = z.infer<typeof DesignSystemScanFacts>;

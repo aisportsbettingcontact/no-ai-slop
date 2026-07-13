@@ -112,6 +112,7 @@ export const TransitionProblemCode = z.enum([
   'GOV_TERMINAL_STATE',
   'GOV_SELF_PUBLISH',
   'GOV_EXCEPTION_NEEDS_EXPIRY',
+  'GOV_EXCEPTION_ALREADY_EXPIRED',
 ]);
 export type TransitionProblemCode = z.infer<typeof TransitionProblemCode>;
 
@@ -163,12 +164,23 @@ export function applyContributionTransition(
       reason: `high-impact contribution "${record.request.id}" cannot be published by its requester "${transition.actor.id}" — an independent reviewer must publish`,
     };
   }
-  if (transition.to === 'product_specific_exception' && record.request.expiresAt === undefined) {
-    return {
-      ok: false,
-      code: 'GOV_EXCEPTION_NEEDS_EXPIRY',
-      reason: `contribution "${record.request.id}" cannot become a product-specific exception without an expiresAt — exceptions are time-bound, never permanent`,
-    };
+  if (transition.to === 'product_specific_exception') {
+    if (record.request.expiresAt === undefined) {
+      return {
+        ok: false,
+        code: 'GOV_EXCEPTION_NEEDS_EXPIRY',
+        reason: `contribution "${record.request.id}" cannot become a product-specific exception without an expiresAt — exceptions are time-bound, never permanent`,
+      };
+    }
+    // An expiry in the past is not time-bound, it is already dead — refusing
+    // here keeps the invariant true at creation, not just at later checks.
+    if (Date.parse(record.request.expiresAt) <= Date.parse(transition.at)) {
+      return {
+        ok: false,
+        code: 'GOV_EXCEPTION_ALREADY_EXPIRED',
+        reason: `contribution "${record.request.id}" expiresAt (${record.request.expiresAt}) is not after the transition time (${transition.at}) — an exception must expire in the future`,
+      };
+    }
   }
   return {
     ok: true,

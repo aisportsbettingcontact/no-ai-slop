@@ -3,11 +3,14 @@ import {
   ArchitectureRules,
   ObservedDependencyGraph,
   validateDesignSystemRegistry,
+  validateInterfacePatternCatalog,
   type ArchitectureReport,
+  type CatalogProblem,
   type DesignSystemRegistry,
+  type InterfacePatternCatalog,
   type RegistryValidation,
 } from '@nas/contracts';
-import { checkArchitecture } from '@nas/anti-slop';
+import { checkArchitecture, INTERFACE_PATTERN_CATALOG } from '@nas/anti-slop';
 import { designSystemRegistry } from '@nas/ui';
 import layerRulesJson from '../../../../docs/architecture/layer-rules.json';
 import observedDependenciesJson from '../../../../docs/architecture/observed-dependencies.json';
@@ -24,6 +27,8 @@ export interface SystemView {
   validation: RegistryValidation;
   rules: ArchitectureRules;
   architecture: ArchitectureReport;
+  patternCatalog: InterfacePatternCatalog;
+  catalogValidation: { valid: boolean; problems: CatalogProblem[] };
 }
 
 let cached: SystemView | null = null;
@@ -37,6 +42,8 @@ export function getSystemView(): SystemView {
     validation: validateDesignSystemRegistry(designSystemRegistry),
     rules,
     architecture: checkArchitecture(rules, graph),
+    patternCatalog: INTERFACE_PATTERN_CATALOG,
+    catalogValidation: validateInterfacePatternCatalog(INTERFACE_PATTERN_CATALOG),
   };
   return cached;
 }

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Button } from './primitives.js';
 
 type Theme = 'light' | 'dark';
 
@@ -30,13 +31,14 @@ export function ThemeToggle() {
 
   const next: Theme = theme === 'dark' ? 'light' : 'dark';
   return (
-    <button
+    <Button
       type="button"
-      className="nas-btn nas-btn--ghost nas-btn--compact"
+      variant="ghost"
+      compact
       aria-label={`Switch to ${next} theme`}
       onClick={() => setTheme(next)}
     >
       {theme === 'dark' ? 'Light' : 'Dark'}
-    </button>
+    </Button>
   );
 }

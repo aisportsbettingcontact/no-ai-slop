@@ -119,7 +119,14 @@ export function checkArchitecture(
   };
 }
 
-/** Deterministic cycle detection (DFS from lexicographically sorted nodes). */
+/**
+ * Deterministic cycle detection (DFS from lexicographically sorted nodes).
+ * Existence detection is sound — any graph containing a cycle yields at least
+ * one reported cycle, so `valid` can never be true while a cycle exists. The
+ * ENUMERATION is not exhaustive: two distinct simple cycles sharing a node may
+ * be reported as one (the `done` set skips re-exploration), so fix the reported
+ * cycle and re-run rather than assuming the list is complete.
+ */
 function findCycles(edges: readonly { from: string; to: string }[]): string[][] {
   const adjacency = new Map<string, string[]>();
   for (const edge of edges) {

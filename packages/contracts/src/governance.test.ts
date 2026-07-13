@@ -131,6 +131,22 @@ describe('contribution state machine', () => {
     expect(withExpiry.ok).toBe(true);
   });
 
+  it('refuses an exception whose expiry is already in the past at transition time', () => {
+    // Transition time is 2026-07-13; this expiry is long dead.
+    const dead = applyContributionTransition(
+      record('triaged', { expiresAt: '2020-06-01T00:00:00.000Z' }),
+      transition('triaged', 'product_specific_exception'),
+    );
+    expect(dead).toMatchObject({ ok: false, code: 'GOV_EXCEPTION_ALREADY_EXPIRED' });
+
+    // Boundary: expiry exactly equal to the transition time is also refused.
+    const boundary = applyContributionTransition(
+      record('triaged', { expiresAt: '2026-07-13T10:00:00.000Z' }),
+      transition('triaged', 'product_specific_exception'),
+    );
+    expect(boundary).toMatchObject({ ok: false, code: 'GOV_EXCEPTION_ALREADY_EXPIRED' });
+  });
+
   it('never mutates the input record', () => {
     const before = record('proposed');
     const snapshot = JSON.parse(JSON.stringify(before)) as unknown;

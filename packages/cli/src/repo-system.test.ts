@@ -17,7 +17,11 @@ import { designSystemRegistry } from '@nas/ui';
 import { loadRules, scanGraph } from '../../../scripts/check-architecture.mjs';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore — .mjs script without type declarations; outputs are schema-validated below.
-import { exportedComponentNames, scanRawValues } from '../../../scripts/check-design-system.mjs';
+import {
+  exportedComponentNames,
+  missingRegistryPaths,
+  scanRawValues,
+} from '../../../scripts/check-design-system.mjs';
 
 /**
  * The system holds on the REAL repository. These tests scan the actual
@@ -63,6 +67,7 @@ describe('design system of this repository', () => {
   const scan = DesignSystemScanFacts.parse({
     rawValues: scanRawValues(repoRoot),
     exportedComponents: exportedComponentNames(UI),
+    missingRegistryPaths: missingRegistryPaths(designSystemRegistry, repoRoot),
   });
 
   it('has zero unexcepted raw values and zero system findings in governed paths', () => {
@@ -77,6 +82,70 @@ describe('design system of this repository', () => {
     const live = DesignSystemRegistry.parse(designSystemRegistry);
     expect(committed.digest).toBe(digestBytes(canonicalJson(live)));
     expect(committed.registry).toEqual(JSON.parse(JSON.stringify(live)));
+  });
+});
+
+describe('scanner evasion regressions (from independent adversarial review)', () => {
+  it('sees devDependency edges, multi-line imports, require(), and dynamic import()', async () => {
+    const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { join } = await import('node:path');
+    const root = mkdtempSync(join(tmpdir(), 'nas-scan-'));
+    try {
+      const pkg = (name: string, extra: object = {}) =>
+        JSON.stringify({ name, version: '0.0.0', ...extra });
+      mkdirSync(join(root, 'packages/low/src'), { recursive: true });
+      mkdirSync(join(root, 'packages/high/src'), { recursive: true });
+      mkdirSync(join(root, 'apps'), { recursive: true });
+      writeFileSync(join(root, 'packages/high/package.json'), pkg('@nas/high'));
+      writeFileSync(join(root, 'packages/high/src/index.ts'), 'export const hi = 1;\n');
+      // The attack shape: an edge declared ONLY as a devDependency, imported ONLY
+      // via a Prettier-wrapped multi-line import, plus require() and import().
+      writeFileSync(
+        join(root, 'packages/low/package.json'),
+        pkg('@nas/low', { devDependencies: { '@nas/high': 'workspace:*' } }),
+      );
+      writeFileSync(
+        join(root, 'packages/low/src/index.ts'),
+        "import {\n  hi,\n} from '@nas/high';\nexport { hi };\n",
+      );
+      writeFileSync(
+        join(root, 'packages/low/src/dynamic.ts'),
+        "export const lazy = () => import('@nas/high');\n",
+      );
+      writeFileSync(
+        join(root, 'packages/low/src/legacy.mjs'),
+        "const m = require('@nas/high');\nexport default m;\n",
+      );
+      const scanned = ObservedDependencyGraph.parse(scanGraph(`${root}/`));
+      expect(scanned.dependencies).toEqual([{ from: '@nas/low', to: '@nas/high' }]);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
+  });
+
+  it('captures the FULL rgba() call and em/rem literals as occurrence values', async () => {
+    const { mkdtempSync, mkdirSync, writeFileSync, rmSync } = await import('node:fs');
+    const { tmpdir } = await import('node:os');
+    const { join } = await import('node:path');
+    const root = mkdtempSync(join(tmpdir(), 'nas-raw-'));
+    try {
+      // Mirror the governed layout: only these paths are scanned.
+      mkdirSync(join(root, 'packages/ui/src'), { recursive: true });
+      mkdirSync(join(root, 'apps/no-ai-slop/app'), { recursive: true });
+      writeFileSync(
+        join(root, 'packages/ui/src/base.css'),
+        '.a { color: rgba(255, 0, 0, 0.5); }\n.b { color: rgba(0, 0, 255, 1); letter-spacing: -0.01em; }\n',
+      );
+      const values = (scanRawValues(`${root}/`) as { value: string }[]).map((o) => o.value);
+      // Full calls — one exception can never blanket-suppress every rgba in a file.
+      expect(values).toContain('rgba(255, 0, 0, 0.5)');
+      expect(values).toContain('rgba(0, 0, 255, 1)');
+      expect(values).toContain('-0.01em');
+      expect(values).not.toContain('rgba(');
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });
 

@@ -2,6 +2,8 @@ import type { ButtonHTMLAttributes, ReactNode } from 'react';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'ghost';
+  /** Reduced height for secondary chrome controls. Never combine with primary. */
+  compact?: boolean;
   children: ReactNode;
 }
 
@@ -9,9 +11,18 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
  * The one primary action per screen uses `variant="primary"`. Everything else is
  * secondary/ghost, so a screen never shows competing primary actions.
  */
-export function Button({ variant = 'secondary', children, className, ...rest }: ButtonProps) {
+export function Button({
+  variant = 'secondary',
+  compact = false,
+  children,
+  className,
+  ...rest
+}: ButtonProps) {
+  const classes = ['nas-btn', `nas-btn--${variant}`, compact ? 'nas-btn--compact' : '', className]
+    .filter(Boolean)
+    .join(' ');
   return (
-    <button className={`nas-btn nas-btn--${variant} ${className ?? ''}`.trim()} {...rest}>
+    <button className={classes} {...rest}>
       {children}
     </button>
   );

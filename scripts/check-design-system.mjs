@@ -13,10 +13,17 @@
  *
  * Governed paths: *.tsx under packages/ui/src and apps/no-ai-slop/app, plus
  * packages/ui/src/base.css. tokens.css is the token definition source and is
- * exempt by construction. Known limits: string-embedded values built at runtime
- * are not observed; the scan is line-based and reports line numbers.
+ * exempt by construction.
+ *
+ * Known limits (documented, verified by adversarial review): the scan is
+ * line-based and static. It covers hex/rgb()/rgba(), px/em/rem/ch literals,
+ * unitless numerics on visual CSS properties, bare numeric style props in TSX,
+ * and the demonstrated computed-value idioms (template-interpolation + unit,
+ * quoted-unit concatenation). Values assembled by arbitrary runtime code beyond
+ * those idioms are NOT statically observable — they are covered by rendered-page
+ * review and the registry sync tests, not by this scanner.
  */
-import { mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -28,16 +35,29 @@ const EXCLUDED_DIRS = new Set(['node_modules', 'dist', '.next']);
 
 // Patterns applied to every governed file (CSS + TSX).
 const SHARED_PATTERNS = [
-  // Hex colors and rgb()/rgba().
+  // Hex colors, and full rgb()/rgba() calls — the WHOLE call is the occurrence
+  // value, so an exception can only ever suppress one exact color, never every
+  // rgba() in a file.
   /#[0-9a-fA-F]{3,8}\b/g,
-  /\brgba?\(/g,
-  // Pixel literals (var(--nas-*) indirections carry no px text of their own).
+  /\brgba?\([^)]*\)/g,
+  // Pixel and typographic-unit literals (var(--nas-*) indirections carry none).
   /\b\d+(?:\.\d+)?px\b/g,
+  /-?\d*\.?\d+(?:em|rem|ch)\b/g,
+  // Computed-value idioms demonstrated by adversarial review: a template
+  // interpolation immediately followed by a unit (`${8}px`), and a bare unit
+  // string literal used in concatenation ('8' + 'px').
+  /\$\{[^}]*\}\s*(?:px|em|rem|ch|vh|vw)\b/g,
+  /['"](?:px|em|rem|ch)['"]/g,
+];
+// CSS-only: numeric literals on visual properties that carry no unit — these
+// must come from tokens (opacity: var(--nas-opacity-disabled)), never inline.
+const CSS_PATTERNS = [
+  /\b(?:opacity|line-height|letter-spacing|z-index|font-weight)\s*:\s*[0-9.]+/g,
 ];
 // TSX-only: bare numeric style props in inline styles (e.g. minHeight: 36).
-// CSS numerics without a px unit (100vh, 1.5, 0.06em) are unit-checked above.
 const TSX_PATTERNS = [
   /\b(?:width|height|minWidth|minHeight|maxWidth|maxHeight|gap|padding|margin|fontSize|borderRadius|top|left|right|bottom)\s*:\s*[1-9]\d*\b/g,
+  /\b(?:opacity|lineHeight|letterSpacing|zIndex|fontWeight)\s*:\s*['"]?[0-9.]+/g,
 ];
 
 /**
@@ -94,7 +114,7 @@ export function scanRawValues(root = repoRoot) {
   for (const file of files) {
     const patterns = file.endsWith('.tsx')
       ? [...SHARED_PATTERNS, ...TSX_PATTERNS]
-      : SHARED_PATTERNS;
+      : [...SHARED_PATTERNS, ...CSS_PATTERNS];
     const lines = stripComments(readFileSync(join(root, file), 'utf8').split('\n'));
     lines.forEach((line, index) => {
       for (const pattern of patterns) {
@@ -115,6 +135,21 @@ export function exportedComponentNames(uiModule) {
     .sort();
 }
 
+/** Registry sourcePath/tests entries that resolve to no real file. */
+export function missingRegistryPaths(registry, root = repoRoot) {
+  const missing = [];
+  for (const component of registry.components) {
+    for (const path of [component.sourcePath, ...component.tests]) {
+      if (!existsSync(join(root, path))) {
+        missing.push({ componentId: component.id, path });
+      }
+    }
+  }
+  return missing.sort(
+    (a, b) => a.componentId.localeCompare(b.componentId) || a.path.localeCompare(b.path),
+  );
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const { DesignSystemRegistry, DesignSystemScanFacts, validateDesignSystemRegistry } =
@@ -131,6 +166,7 @@ async function main() {
   const scan = DesignSystemScanFacts.parse({
     rawValues: scanRawValues(),
     exportedComponents: exportedComponentNames(ui),
+    missingRegistryPaths: missingRegistryPaths(registry),
   });
 
   const canonical = canonicalJson(registry);

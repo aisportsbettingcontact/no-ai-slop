@@ -384,7 +384,7 @@ export const designSystemRegistry: DesignSystemRegistry = {
         {
           name: 'compact',
           purpose:
-            'Height modifier for secondary chrome controls (combines with ghost/secondary; never with primary).',
+            'First-class boolean prop reducing height for secondary chrome controls (combines with ghost/secondary; never with primary).',
         },
       ],
       props: [
@@ -393,6 +393,12 @@ export const designSystemRegistry: DesignSystemRegistry = {
           type: "'primary' | 'secondary' | 'ghost'",
           required: false,
           description: 'Visual emphasis; defaults to secondary so primary is always deliberate.',
+        },
+        {
+          name: 'compact',
+          type: 'boolean',
+          required: false,
+          description: 'Reduced height for secondary chrome controls. Never with primary.',
         },
         {
           name: 'children',
@@ -646,12 +652,14 @@ export const designSystemRegistry: DesignSystemRegistry = {
           name: 'action',
           type: 'ReactNode',
           required: false,
-          description: 'The screen’s single primary action, when it has one.',
+          description:
+            'Trailing slot: the screen’s single primary action, or its overall status badge — never more than one element.',
         },
       ],
       states: [{ state: 'default', behavior: 'Static header with bottom divider.' }],
       usesTokens: [
         'space.2',
+        'space.4',
         'space.6',
         'border.width',
         'color.border',
@@ -816,9 +824,10 @@ export const designSystemRegistry: DesignSystemRegistry = {
         'color.surface-2',
         'type.size.sm',
         'type.weight.medium',
+        'size.control',
       ],
       followsPrinciples: ['principle.radical-clarity'],
-      accessibility: ['rule.aria-current-nav', 'rule.focus-visible'],
+      accessibility: ['rule.aria-current-nav', 'rule.focus-visible', 'rule.touch-target'],
       responsiveBehavior: 'Column in the sidebar; wraps horizontally under the top bar < 1024px.',
       prohibitedUses: ['Nav items for screens that do not exist yet'],
       requiredEvidence: ['browser_run', 'accessibility_result'],
@@ -1095,7 +1104,8 @@ export const designSystemRegistry: DesignSystemRegistry = {
       requirement:
         'Interactive controls are at least size.control (40px) tall; compact (36px) only for secondary chrome.',
       wcagCriterion: '2.5.8',
-      verification: 'base.css control tokens + registry raw-value audit.',
+      verification:
+        'base.css min-height tokens on .nas-btn and .nas-nav__link; rendered-height measurement is manual review (not yet automated).',
     },
     {
       id: 'rule.contrast-aa',

@@ -78,6 +78,19 @@ export function checkDesignSystem(
     });
   }
 
+  for (const missing of scan.missingRegistryPaths) {
+    findings.push({
+      code: 'DS_BROKEN_REFERENCE',
+      severity: 'serious',
+      dimension: 'maintainability',
+      location: { path: REGISTRY_PATH },
+      rationale: `component "${missing.componentId}" references "${missing.path}", which does not exist in the repository`,
+      remediation:
+        'Point sourcePath/tests at real files — a registry that cites nonexistent evidence is itself slop.',
+      evidenceIds: [],
+    });
+  }
+
   const registeredNames = new Set(registry.components.map((component) => component.name));
   for (const exported of scan.exportedComponents) {
     if (!registeredNames.has(exported)) {

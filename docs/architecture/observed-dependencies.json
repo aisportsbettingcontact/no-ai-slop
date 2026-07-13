@@ -11,6 +11,8 @@
       "packages/anti-slop/src/checks/grades.ts",
       "packages/anti-slop/src/checks/impact.test.ts",
       "packages/anti-slop/src/checks/impact.ts",
+      "packages/anti-slop/src/checks/interface-patterns.test.ts",
+      "packages/anti-slop/src/checks/interface-patterns.ts",
       "packages/anti-slop/src/engine.test.ts",
       "packages/anti-slop/src/engine.ts",
       "packages/anti-slop/src/index.ts",
@@ -45,6 +47,8 @@
       "packages/contracts/src/governance.ts",
       "packages/contracts/src/ids.ts",
       "packages/contracts/src/index.ts",
+      "packages/contracts/src/interface-patterns.test.ts",
+      "packages/contracts/src/interface-patterns.ts",
       "packages/contracts/src/release.ts",
       "packages/contracts/src/system-finding.ts"
     ],

@@ -271,7 +271,7 @@ a {
 .nas-brand {
   font-weight: var(--nas-weight-semibold);
   font-size: var(--nas-text-lg);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--nas-tracking-tight);
   white-space: nowrap;
 }
 .nas-nav {
@@ -280,6 +280,9 @@ a {
   gap: var(--nas-space-1);
 }
 .nas-nav__link {
+  display: flex;
+  align-items: center;
+  min-height: var(--nas-size-control);
   padding: var(--nas-space-3) var(--nas-space-4);
   border-radius: var(--nas-radius-md);
   color: var(--nas-text-secondary);

@@ -1,6 +1,6 @@
 {
   "$comment": "GENERATED from packages/ui/src/registry.ts by scripts/check-design-system.mjs --write. Do not edit by hand; the freshness check fails on drift.",
-  "digest": "sha256:45bc2465be160034315cfff4da1debb80e4c6ba388066ce510c1f4eeb06db169",
+  "digest": "sha256:03e3c90c4d6fa1403947423dc23e3e8c7b0b958d5b559be0f72659c6fd130e62",
   "registry": {
     "schemaVersion": 1,
     "name": "No AI Slop Design System",
@@ -764,7 +764,7 @@
           },
           {
             "name": "compact",
-            "purpose": "Height modifier for secondary chrome controls (combines with ghost/secondary; never with primary)."
+            "purpose": "First-class boolean prop reducing height for secondary chrome controls (combines with ghost/secondary; never with primary)."
           }
         ],
         "props": [
@@ -773,6 +773,12 @@
             "type": "'primary' | 'secondary' | 'ghost'",
             "required": false,
             "description": "Visual emphasis; defaults to secondary so primary is always deliberate."
+          },
+          {
+            "name": "compact",
+            "type": "boolean",
+            "required": false,
+            "description": "Reduced height for secondary chrome controls. Never with primary."
           },
           {
             "name": "children",
@@ -1149,7 +1155,7 @@
             "name": "action",
             "type": "ReactNode",
             "required": false,
-            "description": "The screen’s single primary action, when it has one."
+            "description": "Trailing slot: the screen’s single primary action, or its overall status badge — never more than one element."
           }
         ],
         "states": [
@@ -1160,6 +1166,7 @@
         ],
         "usesTokens": [
           "space.2",
+          "space.4",
           "space.6",
           "border.width",
           "color.border",
@@ -1401,14 +1408,16 @@
           "color.text",
           "color.surface-2",
           "type.size.sm",
-          "type.weight.medium"
+          "type.weight.medium",
+          "size.control"
         ],
         "followsPrinciples": [
           "principle.radical-clarity"
         ],
         "accessibility": [
           "rule.aria-current-nav",
-          "rule.focus-visible"
+          "rule.focus-visible",
+          "rule.touch-target"
         ],
         "responsiveBehavior": "Column in the sidebar; wraps horizontally under the top bar < 1024px.",
         "prohibitedUses": [
@@ -1810,7 +1819,7 @@
         "id": "rule.touch-target",
         "requirement": "Interactive controls are at least size.control (40px) tall; compact (36px) only for secondary chrome.",
         "wcagCriterion": "2.5.8",
-        "verification": "base.css control tokens + registry raw-value audit."
+        "verification": "base.css min-height tokens on .nas-btn and .nas-nav__link; rendered-height measurement is manual review (not yet automated)."
       },
       {
         "id": "rule.contrast-aa",

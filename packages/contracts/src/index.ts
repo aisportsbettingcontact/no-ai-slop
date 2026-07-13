@@ -15,3 +15,4 @@ export * from './design-system.js';
 export * from './architecture.js';
 export * from './governance.js';
 export * from './system-finding.js';
+export * from './interface-patterns.js';

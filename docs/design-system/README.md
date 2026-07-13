@@ -12,6 +12,7 @@ expiring exceptions. Since v1.1 that language is **machine-readable** and
 | `packages/ui/src/registry.ts` | The registry **instance** describing the actual system, kept next to the code it describes; color values are imported from `tokens.ts`, never re-typed |
 | `docs/design-system/registry.json` | Generated canonical JSON (with content digest) for tools and agents that cannot execute TypeScript — regenerate with `pnpm check:design-system --write` |
 | `packages/anti-slop/src/checks/design-system.ts` | The pure checker: registry + scan facts in → structured `SystemFinding`s out |
+| `packages/anti-slop/src/checks/interface-patterns.ts` | The 46-pattern interface anti-pattern catalog (AI-generation markers vs general quality failures) + `interfacePatternFinding` |
 | `scripts/check-design-system.mjs` | The scanner + gate: collects facts from governed paths and fails closed on findings or a stale artifact |
 | `apps/no-ai-slop/app/system/page.tsx` | The System view: renders the live registry and validation on every build |
 
@@ -51,6 +52,24 @@ script run.
   code (`DS_RAW_VALUE`, `DS_BROKEN_REFERENCE`, `ARCH_FORBIDDEN_EDGE`, …),
   severity, exact location, rationale, remediation, and the anti-slop dimension
   it grades into. There is no aggregate score.
+
+## Reviewing external mockups and generated designs
+
+`INTERFACE_PATTERN_CATALOG` (in `@nas/anti-slop`) names **46 recurring
+interface failures** across eight categories — visual details (7), typography
+(10), color and contrast (5), layout and spacing (8), motion (3), copy (4),
+imagery (1), general quality (8). Each pattern declares whether it is a
+specific **AI-generation marker** (26 patterns: glassmorphism-everywhere,
+gradient text, hero metric layouts, aphoristic copy cadence, …) or a
+**general quality failure** (20: low-contrast text, clipped popovers, skipped
+heading levels, …), how it is detected (`static_analysis`, `rendered_page`, or
+`manual_review`), the anti-slop dimension it grades into, and its remediation.
+A reviewer cites a hit as `interfacePatternFinding(20, location, observed)` →
+a `DS_INTERFACE_PATTERN` finding whose serious/critical severity fails that
+dimension through the ordinary gate. The full catalog renders on `/system`
+with catalog-integrity validation (unique ids, contiguous 1–46 numbering) run
+live. Detection today is reviewer-driven; automated detectors for the
+`static_analysis` subset are future work and are not claimed.
 
 ## Known limits (honestly disclosed)
 

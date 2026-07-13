@@ -40,7 +40,8 @@ required by the project: **Implemented**, **Verified**, **Partially implemented*
 | Deterministic change-impact report (files → modules → dimensions → evidence) | Verified | `packages/anti-slop/src/checks/impact.ts`, `--impact` mode |
 | System findings graded into the existing 13 dimensions (no new dimension, no score) | Verified | `packages/anti-slop/src/checks/grades.ts` + gate integration test |
 | Governance contribution state machine (non-self publish, expiring exceptions) | Verified | `packages/contracts/src/governance.ts` |
-| Control-plane `/system` view rendering the live registry + architecture check | Verified | `apps/no-ai-slop/app/system/` |
+| 46-pattern interface anti-pattern catalog (AI markers vs quality failures, dimension-mapped) | Verified | `packages/anti-slop/src/checks/interface-patterns.ts` |
+| Control-plane `/system` view rendering the live registry + architecture check + catalog | Verified | `apps/no-ai-slop/app/system/` |
 
 v1.1 added **zero external dependencies** and modified **no existing kernel
 behavior** (all pre-existing tests pass unmodified).

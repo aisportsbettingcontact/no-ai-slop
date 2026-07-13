@@ -68,7 +68,11 @@ function registry(overrides: Partial<DesignSystemRegistry> = {}): DesignSystemRe
   };
 }
 
-const cleanScan: DesignSystemScanFacts = { rawValues: [], exportedComponents: ['Button'] };
+const cleanScan: DesignSystemScanFacts = {
+  rawValues: [],
+  exportedComponents: ['Button'],
+  missingRegistryPaths: [],
+};
 
 describe('checkDesignSystem', () => {
   it('returns zero findings for a coherent system and clean scan', () => {
@@ -145,6 +149,26 @@ describe('checkDesignSystem', () => {
     expect(codes).toEqual(['DS_EXCEPTION_EXPIRED', 'DS_RAW_VALUE']);
   });
 
+  it('flags a registry entry whose sourcePath or tests point at no real file', () => {
+    const findings = checkDesignSystem(
+      registry(),
+      {
+        ...cleanScan,
+        missingRegistryPaths: [
+          { componentId: 'component.button', path: 'packages/ui/src/ghost.test.tsx' },
+        ],
+      },
+      NOW,
+    );
+    expect(findings).toEqual([
+      expect.objectContaining({
+        code: 'DS_BROKEN_REFERENCE',
+        severity: 'serious',
+        rationale: expect.stringContaining('packages/ui/src/ghost.test.tsx'),
+      }),
+    ]);
+  });
+
   it('flags an exported component with no registry entry', () => {
     const findings = checkDesignSystem(
       registry(),
@@ -189,6 +213,7 @@ describe('checkDesignSystem', () => {
         { path: 'a.css', line: 9, value: '#000' },
         { path: 'a.css', line: 2, value: '#111' },
       ],
+      missingRegistryPaths: [],
     };
     const a = checkDesignSystem(registry(), scan, NOW);
     const b = checkDesignSystem(registry(), scan, NOW);

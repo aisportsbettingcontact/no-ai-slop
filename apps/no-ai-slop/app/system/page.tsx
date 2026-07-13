@@ -1,5 +1,11 @@
 import { Badge, Card, KeyValue, PageHeader, ReasonList } from '@nas/ui';
-import type { AtomicLevel, ComponentDef, DesignTokenDef, TokenCategory } from '@nas/contracts';
+import type {
+  AtomicLevel,
+  ComponentDef,
+  DesignTokenDef,
+  InterfacePatternCategory,
+  TokenCategory,
+} from '@nas/contracts';
 import { getSystemView } from '../lib/system';
 
 const LEVEL_ORDER: AtomicLevel[] = [
@@ -18,6 +24,17 @@ const LEVEL_LABEL: Record<AtomicLevel, string> = {
   template: 'Templates',
   page: 'Pages',
 };
+const PATTERN_CATEGORY_LABEL: Record<InterfacePatternCategory, string> = {
+  visual_details: 'Visual details',
+  typography: 'Typography',
+  color_contrast: 'Color and contrast',
+  layout_spacing: 'Layout and spacing',
+  motion: 'Motion',
+  copy: 'Copy',
+  imagery: 'Imagery',
+  general_quality: 'General quality',
+};
+
 const CATEGORY_LABEL: Record<TokenCategory, string> = {
   color: 'Color',
   typography: 'Typography',
@@ -118,8 +135,15 @@ function ComponentDetail({ component }: { component: ComponentDef }) {
 
 export default function SystemPage() {
   const view = getSystemView();
-  const { registry, validation, rules, architecture } = view;
-  const coherent = validation.valid && architecture.valid;
+  const { registry, validation, rules, architecture, patternCatalog, catalogValidation } = view;
+  const coherent = validation.valid && architecture.valid && catalogValidation.valid;
+
+  const patternsByCategory = new Map<InterfacePatternCategory, typeof patternCatalog.patterns>();
+  for (const pattern of patternCatalog.patterns) {
+    const list = patternsByCategory.get(pattern.category) ?? [];
+    list.push(pattern);
+    patternsByCategory.set(pattern.category, list);
+  }
 
   const tokensByCategory = new Map<TokenCategory, DesignTokenDef[]>();
   for (const token of registry.tokens) {
@@ -291,6 +315,67 @@ export default function SystemPage() {
             </li>
           ))}
         </ul>
+      </Card>
+
+      <Card
+        title="Interface anti-pattern catalog"
+        subtitle="What a mockup or generated design is reviewed against — each hit cites a numbered pattern, its dimension, and a remediation"
+        action={
+          catalogValidation.valid ? (
+            <Badge tone="success" symbol="✓" label={`${patternCatalog.patterns.length} patterns`} />
+          ) : (
+            <Badge
+              tone="danger"
+              symbol="✗"
+              label={`${catalogValidation.problems.length} problems`}
+            />
+          )
+        }
+      >
+        <div className="nas-stack" style={{ gap: 'var(--nas-space-3)' }}>
+          {[...patternsByCategory.entries()].map(([category, patterns]) => (
+            <details key={category}>
+              <summary>
+                {PATTERN_CATEGORY_LABEL[category]}{' '}
+                <span className="nas-muted">({patterns.length})</span>
+              </summary>
+              <ul
+                className="nas-list"
+                style={{ padding: 'var(--nas-space-3) 0 var(--nas-space-3) var(--nas-space-6)' }}
+              >
+                {patterns.map((pattern) => (
+                  <li
+                    key={pattern.id}
+                    className="nas-list__item"
+                    style={{ padding: 'var(--nas-space-2) 0' }}
+                  >
+                    {pattern.signal === 'ai_generated_marker' ? (
+                      <Badge tone="warning" symbol="!" label="AI marker" />
+                    ) : (
+                      <Badge tone="neutral" symbol="–" label="Quality" />
+                    )}
+                    <div className="nas-stack" style={{ gap: 'var(--nas-space-1)', minWidth: 0 }}>
+                      <span>
+                        <span className="nas-muted nas-mono">#{pattern.number}</span>{' '}
+                        <strong>{pattern.name}</strong>
+                      </span>
+                      <span className="nas-muted" style={{ fontSize: 'var(--nas-text-sm)' }}>
+                        {pattern.description}
+                      </span>
+                      <span
+                        className="nas-muted nas-mono"
+                        style={{ fontSize: 'var(--nas-text-sm)' }}
+                      >
+                        {pattern.id} · grades {pattern.dimension} ·{' '}
+                        {pattern.detection.replace('_', ' ')}
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
       </Card>
 
       <Card

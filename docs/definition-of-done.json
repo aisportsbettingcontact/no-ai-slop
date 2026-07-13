@@ -63,7 +63,7 @@
       "statement": "Primary screens have zero serious/critical accessibility violations across desktop/mobile, light/dark.",
       "status": "verified",
       "automatable": true,
-      "evidence": "apps/no-ai-slop/e2e/browser-check.mjs (12 axe-core scans)"
+      "evidence": "apps/no-ai-slop/e2e/browser-check.mjs (16 axe-core scans: 4 routes x 2 viewports x 2 themes)"
     },
     {
       "id": "dod.design.contrast",
@@ -113,6 +113,13 @@
       "status": "verified",
       "automatable": true,
       "evidence": "apps/no-ai-slop/e2e/browser-check.mjs (16 axe scans incl. /system); apps/no-ai-slop/app/lib/system.ts"
+    },
+    {
+      "id": "dod.system.antipattern_catalog",
+      "statement": "46 recurring interface anti-patterns (AI-generation markers vs general quality failures) form a typed, validated catalog mapped into the 13 dimensions; a catalog hit becomes a structured finding that blocks the gate.",
+      "status": "verified",
+      "automatable": true,
+      "evidence": "packages/anti-slop/src/checks/interface-patterns.test.ts; packages/contracts/src/interface-patterns.test.ts"
     },
     {
       "id": "dod.system.governance_state_machine",
