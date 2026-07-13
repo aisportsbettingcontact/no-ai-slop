@@ -4,3 +4,6 @@ dist
 coverage
 pnpm-lock.yaml
 *.md
+# Generated artifacts (exact-string freshness-checked by their generators)
+docs/design-system/registry.json
+docs/architecture/observed-dependencies.json

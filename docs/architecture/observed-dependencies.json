@@ -1,0 +1,199 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "scripts/check-architecture.mjs",
+  "moduleFiles": {
+    "@nas/anti-slop": [
+      "packages/anti-slop/src/checks/architecture.test.ts",
+      "packages/anti-slop/src/checks/architecture.ts",
+      "packages/anti-slop/src/checks/design-system.test.ts",
+      "packages/anti-slop/src/checks/design-system.ts",
+      "packages/anti-slop/src/checks/grades.test.ts",
+      "packages/anti-slop/src/checks/grades.ts",
+      "packages/anti-slop/src/checks/impact.test.ts",
+      "packages/anti-slop/src/checks/impact.ts",
+      "packages/anti-slop/src/engine.test.ts",
+      "packages/anti-slop/src/engine.ts",
+      "packages/anti-slop/src/index.ts",
+      "packages/anti-slop/src/policy.ts"
+    ],
+    "@nas/cli": [
+      "packages/cli/src/args.ts",
+      "packages/cli/src/cli.test.ts",
+      "packages/cli/src/cli.ts",
+      "packages/cli/src/commands/antislop.ts",
+      "packages/cli/src/commands/demo.ts",
+      "packages/cli/src/commands/evidence.ts",
+      "packages/cli/src/commands/gate.ts",
+      "packages/cli/src/context.ts",
+      "packages/cli/src/index.ts",
+      "packages/cli/src/repo-system.test.ts",
+      "packages/cli/src/run.ts",
+      "packages/cli/src/store.ts"
+    ],
+    "@nas/contracts": [
+      "packages/contracts/src/actor.ts",
+      "packages/contracts/src/anti-slop.ts",
+      "packages/contracts/src/architecture.test.ts",
+      "packages/contracts/src/architecture.ts",
+      "packages/contracts/src/authz.ts",
+      "packages/contracts/src/contracts.test.ts",
+      "packages/contracts/src/design-system.test.ts",
+      "packages/contracts/src/design-system.ts",
+      "packages/contracts/src/evidence.ts",
+      "packages/contracts/src/findings.ts",
+      "packages/contracts/src/governance.test.ts",
+      "packages/contracts/src/governance.ts",
+      "packages/contracts/src/ids.ts",
+      "packages/contracts/src/index.ts",
+      "packages/contracts/src/release.ts",
+      "packages/contracts/src/system-finding.ts"
+    ],
+    "@nas/crypto": [
+      "packages/crypto/src/index.test.ts",
+      "packages/crypto/src/index.ts"
+    ],
+    "@nas/kernel-authz": [
+      "packages/kernel-authz/src/broker.ts",
+      "packages/kernel-authz/src/engine.test.ts",
+      "packages/kernel-authz/src/engine.ts",
+      "packages/kernel-authz/src/index.ts",
+      "packages/kernel-authz/src/resource.test.ts",
+      "packages/kernel-authz/src/resource.ts"
+    ],
+    "@nas/kernel-evidence": [
+      "packages/kernel-evidence/src/index.ts",
+      "packages/kernel-evidence/src/log.test.ts",
+      "packages/kernel-evidence/src/log.ts",
+      "packages/kernel-evidence/src/signer.ts"
+    ],
+    "@nas/kernel-release": [
+      "packages/kernel-release/src/evaluate.test.ts",
+      "packages/kernel-release/src/evaluate.ts",
+      "packages/kernel-release/src/index.ts",
+      "packages/kernel-release/src/policy.ts",
+      "packages/kernel-release/src/verify.ts"
+    ],
+    "@nas/ui": [
+      "packages/ui/src/base.css",
+      "packages/ui/src/components/ThemeToggle.tsx",
+      "packages/ui/src/components/components.test.tsx",
+      "packages/ui/src/components/primitives.tsx",
+      "packages/ui/src/components/status.tsx",
+      "packages/ui/src/contrast.ts",
+      "packages/ui/src/index.ts",
+      "packages/ui/src/registry.test.ts",
+      "packages/ui/src/registry.ts",
+      "packages/ui/src/tokens.css",
+      "packages/ui/src/tokens.test.ts",
+      "packages/ui/src/tokens.ts"
+    ],
+    "@nas/app": [
+      "apps/no-ai-slop/app/components/AppShell.tsx",
+      "apps/no-ai-slop/app/components/NavLinks.tsx",
+      "apps/no-ai-slop/app/evidence/page.tsx",
+      "apps/no-ai-slop/app/layout.tsx",
+      "apps/no-ai-slop/app/lib/lifecycle.ts",
+      "apps/no-ai-slop/app/lib/system.ts",
+      "apps/no-ai-slop/app/page.tsx",
+      "apps/no-ai-slop/app/release/page.tsx",
+      "apps/no-ai-slop/app/system/page.tsx",
+      "apps/no-ai-slop/e2e/browser-check.mjs",
+      "apps/no-ai-slop/next-env.d.ts",
+      "apps/no-ai-slop/next.config.mjs"
+    ]
+  },
+  "dependencies": [
+    {
+      "from": "@nas/anti-slop",
+      "to": "@nas/contracts"
+    },
+    {
+      "from": "@nas/app",
+      "to": "@nas/anti-slop"
+    },
+    {
+      "from": "@nas/app",
+      "to": "@nas/contracts"
+    },
+    {
+      "from": "@nas/app",
+      "to": "@nas/kernel-authz"
+    },
+    {
+      "from": "@nas/app",
+      "to": "@nas/kernel-evidence"
+    },
+    {
+      "from": "@nas/app",
+      "to": "@nas/kernel-release"
+    },
+    {
+      "from": "@nas/app",
+      "to": "@nas/ui"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/anti-slop"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/contracts"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/crypto"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/kernel-authz"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/kernel-evidence"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/kernel-release"
+    },
+    {
+      "from": "@nas/cli",
+      "to": "@nas/ui"
+    },
+    {
+      "from": "@nas/kernel-authz",
+      "to": "@nas/contracts"
+    },
+    {
+      "from": "@nas/kernel-authz",
+      "to": "@nas/crypto"
+    },
+    {
+      "from": "@nas/kernel-authz",
+      "to": "@nas/kernel-evidence"
+    },
+    {
+      "from": "@nas/kernel-evidence",
+      "to": "@nas/contracts"
+    },
+    {
+      "from": "@nas/kernel-evidence",
+      "to": "@nas/crypto"
+    },
+    {
+      "from": "@nas/kernel-release",
+      "to": "@nas/contracts"
+    },
+    {
+      "from": "@nas/kernel-release",
+      "to": "@nas/crypto"
+    },
+    {
+      "from": "@nas/kernel-release",
+      "to": "@nas/kernel-evidence"
+    },
+    {
+      "from": "@nas/ui",
+      "to": "@nas/contracts"
+    }
+  ]
+}
